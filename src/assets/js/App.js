@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Home from './Home';
-import Loading from './Loading';
 
 class App extends Component {
 
@@ -54,38 +53,6 @@ class App extends Component {
 
                 return false;
 
-            }
-
-        },
-
-        tooLong: () => {
-
-            if (this.state.loading === true) {
-
-                const messages  =  [
-    
-                    'Almost there...',
-                    'Not long now...',
-                    'Just one more thing...'
-    
-                ];
-
-                let count       = -1;
-    
-                setInterval(() => {
-    
-                    count === messages.length - 1 ? count = 0 : count = count + 1;
-    
-                    //
-    
-                    this.setState((prevState) => ({
-    
-                        loadingMessages: [...prevState.loadingMessages, messages[count]]
-    
-                    }))
-            
-                }, 3723)
-    
             }
 
         },
@@ -310,8 +277,8 @@ class App extends Component {
 
         try {
 
-            const teamsURL          = await fetch('http://localhost:5000/api/teams');
-            const transfersURL      = await fetch('http://localhost:5000/api/transfers');
+            const teamsURL          = await fetch('https://whomovedclub.herokuapp.com/teams');
+            const transfersURL      = await fetch('https://whomovedclub.herokuapp.com/transfers');
 
             let res1 = await teamsURL.json();
             let res2 = await transfersURL.json();
@@ -368,7 +335,7 @@ class App extends Component {
 
                     !this.state.loading
                         ? <Home {...this.state} {...this.actions} />
-                        : <Loading messages={this.state.loadingMessages} />
+                        : <div className="loading"><p>Loading</p></div>
                         
                 }
 

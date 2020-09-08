@@ -172,7 +172,7 @@ p.status, div.transfers div.player span.name, div.transfers p.notice span.name {
   100% {
     content: '🌍'; } }
 
-@keyframes loading {
+@keyframes loadingTime {
   0% {
     content: '🕛'; }
   8% {
@@ -200,7 +200,7 @@ p.status, div.transfers div.player span.name, div.transfers p.notice span.name {
   96% {
     content: '🕛'; } }
 
-@-webkit-keyframes loading {
+@-webkit-keyframes loadingTime {
   0% {
     content: '🕛'; }
   8% {
@@ -227,6 +227,30 @@ p.status, div.transfers div.player span.name, div.transfers p.notice span.name {
     content: '🕚'; }
   96% {
     content: '🕛'; } }
+
+@keyframes loadingDots {
+  0% {
+    content: '.'; }
+  25% {
+    content: '..'; }
+  50% {
+    content: '...'; }
+  75% {
+    content: '....'; }
+  100% {
+    content: '.'; } }
+
+@-webkit-keyframes loadingDots {
+  0% {
+    content: '.'; }
+  25% {
+    content: '..'; }
+  50% {
+    content: '...'; }
+  75% {
+    content: '....'; }
+  100% {
+    content: '.'; } }
 
 p.status:before, div.transfers div.player:before, div.transfers p.notice:before {
   font-family: "Material Icons";
@@ -251,13 +275,27 @@ div.loading {
     content: '🕛';
     padding-right: 10px;
     font-size: 16px;
-    -webkit-animation-name: loading;
+    -webkit-animation-name: loadingTime;
     -webkit-animation-duration: 1s;
     -webkit-animation-timing-function: linear;
     -webkit-animation-iteration-count: infinite;
     -webkit-animation-delay: 0s;
     -webkit-animation-fill-mode: none;
-    animation-name: loading;
+    animation-name: loadingTime;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-delay: 0s;
+    animation-fill-mode: none; }
+  div.loading p:after {
+    content: '...';
+    -webkit-animation-name: loadingDots;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-delay: 0s;
+    -webkit-animation-fill-mode: none;
+    animation-name: loadingDots;
     animation-duration: 1s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;

@@ -22,4 +22,10 @@ div.loading
 
             font-size: $fontBase - 4px
 
-            +animation(loading, 1s, linear, infinite)
+            +animation(loadingTime, 1s, linear, infinite)
+
+        &:after
+
+            content: '...'
+
+            +animation(loadingDots, 1s, linear, infinite)
