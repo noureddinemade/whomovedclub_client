@@ -9,8 +9,6 @@ import Navigation from './Layout/Navigation';
 
 const Home = props => {
 
-    const { lastUpdated } = props;
-
     return (
 
         <Router>
