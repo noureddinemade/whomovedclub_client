@@ -15,7 +15,7 @@ const Home = props => {
 
         <Router>
 
-            <Info lastUpdated={lastUpdated} />
+            <Info />
 
             <section className="content">
 

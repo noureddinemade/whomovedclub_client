@@ -106,7 +106,7 @@ p {
   p.notice {
     border-color: rgba(34, 34, 34, 0.2) !important; }
   p.small {
-    margin-top: 12.5px;
+    margin: 25px 0;
     font-size: 16px;
     opacity: .4; }
 
@@ -252,6 +252,46 @@ p.status, div.transfers div.player span.name, div.transfers p.notice span.name {
   100% {
     content: '.'; } }
 
+@keyframes logo {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(-360deg);
+    -ms-transform: rotate(-360deg);
+    transform: rotate(-360deg); } }
+
+@-webkit-keyframes logo {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(-360deg);
+    -ms-transform: rotate(-360deg);
+    transform: rotate(-360deg); } }
+
+@keyframes logoRes {
+  0% {
+    -webkit-transform: rotate(0deg) translateY(-70%);
+    -ms-transform: rotate(0deg) translateY(-70%);
+    transform: rotate(0deg) translateY(-70%); }
+  100% {
+    -webkit-transform: rotate(-360deg) translateY(-70%);
+    -ms-transform: rotate(-360deg) translateY(-70%);
+    transform: rotate(-360deg) translateY(-70%); } }
+
+@-webkit-keyframes logoRes {
+  0% {
+    -webkit-transform: rotate(0deg) translateY(-70%);
+    -ms-transform: rotate(0deg) translateY(-70%);
+    transform: rotate(0deg) translateY(-70%); }
+  100% {
+    -webkit-transform: rotate(-360deg) translateY(-70%);
+    -ms-transform: rotate(-360deg) translateY(-70%);
+    transform: rotate(-360deg) translateY(-70%); } }
+
 p.status:before, div.transfers div.player:before, div.transfers p.notice:before {
   font-family: "Material Icons";
   font-weight: normal;
@@ -364,6 +404,23 @@ section.info {
     section.info {
       position: relative;
       height: auto; } }
+  section.info img.logo {
+    width: 80%;
+    -webkit-animation-name: logo;
+    -webkit-animation-duration: 30s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-delay: 0s;
+    -webkit-animation-fill-mode: none;
+    animation-name: logo;
+    animation-duration: 30s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-delay: 0s;
+    animation-fill-mode: none; }
+    @media screen and (max-width: 1280px) {
+      section.info img.logo {
+        width: 100px; } }
 
 div.transfers {
   display: flex;
@@ -372,6 +429,7 @@ div.transfers {
     position: relative;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     margin-bottom: 12.5px;
     border: 2px solid #222222;
     box-shadow: 0px 0px 0 #03B37B;
@@ -395,6 +453,29 @@ div.transfers {
     div.transfers div.player a.from, div.transfers p.notice a.from {
       color: #FF1F4E;
       border-bottom: 2px dotted #FF1F4E; }
+    div.transfers div.player p, div.transfers p.notice p {
+      width: 80%; }
+      @media screen and (max-width: 1280px) {
+        div.transfers div.player p, div.transfers p.notice p {
+          width: 70%; } }
+    div.transfers div.player div.teamLogos, div.transfers p.notice div.teamLogos {
+      position: relative; }
+      @media screen and (max-width: 800px) {
+        div.transfers div.player div.teamLogos, div.transfers p.notice div.teamLogos {
+          display: none; } }
+      div.transfers div.player div.teamLogos img, div.transfers p.notice div.teamLogos img {
+        position: relative;
+        z-index: 2;
+        width: auto;
+        height: 50px;
+        object-fit: contain; }
+        div.transfers div.player div.teamLogos img:first-of-type, div.transfers p.notice div.teamLogos img:first-of-type {
+          position: absolute;
+          z-index: 1;
+          opacity: .3;
+          -webkit-transform: scale(0.7) translateX(-70%);
+          -ms-transform: scale(0.7) translateX(-70%);
+          transform: scale(0.7) translateX(-70%); }
   div.transfers:hover div.player, div.transfers:hover p.notice {
     opacity: .3; }
 

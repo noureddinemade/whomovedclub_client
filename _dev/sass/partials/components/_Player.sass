@@ -5,6 +5,7 @@ div.player
     position: relative
     display: flex
     align-items: center
+    justify-content: space-between
 
     margin-bottom: $globalSpace / 4
 
@@ -58,3 +59,47 @@ div.player
             color: $tertiary
 
             border-bottom: 2px dotted $tertiary
+
+    p
+        
+        width: 80%
+
+
+        // Responsive
+
+        +screen($sXL)
+
+            width: 70%
+
+    div.teamLogos
+
+        position: relative
+
+        // Responsive
+
+        +screen($sMD)
+
+            display: none
+
+        // Children
+
+        img
+
+            position: relative
+            z-index: 2
+            
+            width: auto
+            height: 50px
+
+            object-fit: contain
+
+            // Psuedo
+
+            &:first-of-type
+
+                position: absolute
+                z-index: 1
+
+                opacity: .3
+                
+                +transform((scale, translateX), (.7, -70%))

@@ -1,17 +1,13 @@
 import React from 'react';
-import Moment from 'react-moment';
+import logo from '../../img/logo.svg';
 
-const Info = ({ lastUpdated }) => {
+const Info = () => {
 
     return (
 
         <section className="info">
 
-            <h1>
-                <span>Who</span><span>moved</span>.club
-            </h1>
-
-            { lastUpdated !== null ? <p className="small">Last updated <Moment to={ lastUpdated } /></p> : '' }
+            <h1><img src={logo} alt="" className="logo"/></h1>
 
         </section>
 

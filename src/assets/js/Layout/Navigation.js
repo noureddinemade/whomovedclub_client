@@ -1,10 +1,11 @@
 import React from 'react';
+import Moment from 'react-moment';
 import { NavLink } from 'react-router-dom';
 import NavFilter from './NavFilter';
 
 const Navigation = props => {
 
-    const { teams, isDuplicate, transfers } = props;
+    const { teams, isDuplicate, transfers, lastUpdated } = props;
 
     let leagues = [];
 
@@ -26,6 +27,8 @@ const Navigation = props => {
     return (
 
         <nav>
+
+            { lastUpdated !== null ? <p className="small">Last updated <Moment to={ lastUpdated } /></p> : '' }
 
             <ul>
 
