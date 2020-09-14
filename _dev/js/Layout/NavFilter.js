@@ -1,19 +1,17 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const NavFilter = ({ transfers, teams, filterTransfers, ...t }) => {
+const NavFilter = ({ transfers, teams, byLeague, generateLinks, ...t }) => {
 
-    const countryLink       = t.country.replace(/ /g, '-');
-    const leagueLink        = t.league.replace(/ /g, '-');
-    const link              = `/${countryLink}/${leagueLink}`;
+    const link              = generateLinks(null, t);
     const tag               = t.country.substr(0,3).toLowerCase();
-    const results           = filterTransfers(t);
+    const results           = byLeague(t.country, t.league);
 
     return (
 
         <li>
             <NavLink 
-                exact to={ link }
+                exact to={ link.league }
                 className={ results.length === 0 ? `disabled ${tag}` : tag }
             >
 

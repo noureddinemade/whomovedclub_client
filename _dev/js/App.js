@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import Home from './Home';
 
 class App extends Component {
@@ -106,13 +107,149 @@ class App extends Component {
         
         },
 
+        addDashes: (string) => {
+
+            return string.replace(/ /g, '-');
+
+        },
+
         removeDashes: (string) => {
 
             return string.replace(/-/g, ' ');
 
         },
 
-        filterStart: (country, league, teams = this.state.teams) => {
+        generateLinks: (current = null, nav = null, teams = this.state.teams) => {
+
+            let result;
+            let teamIn;
+            let teamOut;
+            let leagueIn;
+            let teamInLink;
+            let teamOutLink;
+            let leagueInLink;
+
+            if (current) {
+
+                const teamInFilter    = teams.filter(team => team.teamID === current.team.in.id);
+                const teamOutFilter   = teams.filter(team => team.teamID === current.team.out.id);
+    
+                if (teamInFilter !== 'undefined' && teamInFilter.length > 0) {
+    
+                    teamIn = {
+    
+                        name:       this.actions.addDashes(teamInFilter[0].name),
+                        country:    this.actions.addDashes(teamInFilter[0].country),
+                        league:     this.actions.addDashes(teamInFilter[0].league)
+    
+                    }
+    
+                    teamInLink = <Link to={`/${teamIn.country}/${teamIn.league}/${teamIn.name}/in`} className="to">{current.team.in.name}</Link>;
+    
+                } else {
+
+                    teamInLink  = current.team.in.name;
+    
+                } 
+    
+                if (teamOutFilter !== 'undefined' && teamOutFilter.length > 0) {
+    
+                    teamOut = {
+    
+                        name:       this.actions.addDashes(teamOutFilter[0].name),
+                        country:    this.actions.addDashes(teamOutFilter[0].country),
+                        league:     this.actions.addDashes(teamOutFilter[0].league)
+    
+                    }
+    
+                    teamOutLink = <Link to={`/${teamOut.country}/${teamOut.league}/${teamOut.name}/out`} className="from">{current.team.out.name}</Link>;
+    
+                } else {
+    
+                    teamOutLink  = current.team.out.name;
+    
+                }
+
+            }
+            else if (nav) {
+
+                leagueIn = {
+
+                    country: this.actions.addDashes(nav.country),
+                    league: this.actions.addDashes(nav.league),
+
+                }
+
+                leagueInLink = `/${leagueIn.country}/${leagueIn.league}`;
+
+            }
+
+            //
+
+            result = {
+
+                in:     teamInLink,
+                out:    teamOutLink,
+                league: leagueInLink
+
+            };
+
+            return result;
+
+        },
+
+        generateInfo: (t) => {
+
+            let result;
+            let cost = t.type.replace(' ', '');
+
+            const name = t.name.includes('&apos;') ? t.name.replace('&apos;', "'") : t.name;
+            const type = t.type === 'Loan' ? 'loaned' : 'transferred';
+
+            if (t.type === 'Free') {
+
+                cost = ' for free.'
+
+            }
+
+            else if (t.type === 'Loan') {
+
+                cost = '.'
+
+            }
+
+            else if (t.type.charAt(0) !== '€') {
+
+                cost = ` for €${cost}.`;
+
+            }
+
+            else {
+
+                cost = ` for ${cost}.`
+
+            }
+            
+
+            result = {
+
+                name: name,
+                cost: cost,
+                type: type,
+                date: t.transferDate,
+                link: this.actions.generateLinks(t)
+
+            }
+
+            return result;
+
+        }
+
+    }
+
+    filters = {
+
+        start: (country, league, teams = this.state.teams) => {
 
             const c             = this.actions.removeDashes(country);
             const l             = this.actions.removeDashes(league);
@@ -123,12 +260,12 @@ class App extends Component {
 
         },
 
-        filterByTeam: (country, league, current, direction, transfers = this.state.transfers) => {
+        byTeam: (country, league, current, direction, transfers = this.state.transfers) => {
 
             let results = [];
 
             const t             = this.actions.removeDashes(current);
-            const filter        = this.actions.filterStart(country, league);
+            const filter        = this.filters.start(country, league);
             const teamFilter    = filter.filter(team => team.name === t);
 
             // eslint-disable-next-line
@@ -166,11 +303,11 @@ class App extends Component {
 
         },
 
-        filterByLeague: (country, league, transfers = this.state.transfers) => {
+        byLeague: (country, league, transfers = this.state.transfers) => {
 
             let results = [];
 
-            const filter = this.actions.filterStart(country, league);
+            const filter = this.filters.start(country, league);
 
             // eslint-disable-next-line
             filter.map(t => {
@@ -182,87 +319,6 @@ class App extends Component {
             });
 
             return results.sort((a,b) => new Date(b.transferDate) - new Date(a.transferDate));
-
-        },
-
-        filterTransfers: (current, teams = this.state.teams, transfers = this.state.transfers) => {
-
-            let results = [];
-
-            const filter = this.actions.filterStart(current.country, current.league);
-
-            // eslint-disable-next-line
-            filter.map(t => {
-
-                const res = transfers.filter(transfer => transfer.team.in.id === t.teamID);
-        
-                if (res.length > 0) { res.map(t => results.push(t)) }; 
-        
-            });
-
-            return results.sort((a,b) => new Date(b.transferDate) - new Date(a.transferDate));
-
-        },
-
-        generateLinks: (current, teams = this.state.teams) => {
-
-            const teamInFilter    = teams.filter(team => team.teamID === current.team.in.id);
-            const teamOutFilter   = teams.filter(team => team.teamID === current.team.out.id);
-
-            let result;
-            let teamIn;
-            let teamInLink;
-            let teamOut;
-            let teamOutLink;
-
-            if (teamInFilter !== 'undefined' && teamInFilter.length > 0) {
-
-                teamIn = {
-
-                    name:       teamInFilter[0].name.replace(/ /g, '-'),
-                    country:    teamInFilter[0].country.replace(/ /g, '-'),
-                    league:     teamInFilter[0].league.replace(/ /g, '-')
-
-                }
-
-                teamInLink = `/${teamIn.country}/${teamIn.league}/${teamIn.name}/in`
-
-            } else {
-
-                teamIn      = null;
-                teamInLink  = null;
-
-            } 
-
-            if (teamOutFilter !== 'undefined' && teamOutFilter.length > 0) {
-
-                teamOut = {
-
-                    name:       teamOutFilter[0].name.replace(/ /g, '-'),
-                    country:    teamOutFilter[0].country.replace(/ /g, '-'),
-                    league:     teamOutFilter[0].league.replace(/ /g, '-')
-
-                }
-
-                teamOutLink = `/${teamOut.country}/${teamOut.league}/${teamOut.name}/out`
-
-            } else {
-
-                teamOut      = null;
-                teamOutLink  = null;
-
-            }
-
-            //
-
-            result = {
-
-                in:     teamInLink,
-                out:    teamOutLink
-
-            };
-
-            return result;
 
         }
 
@@ -334,7 +390,7 @@ class App extends Component {
                 {
 
                     !this.state.loading
-                        ? <Home {...this.state} {...this.actions} />
+                        ? <Home {...this.state} {...this.actions} {...this.filters} />
                         : <div className="loading"><p>Loading</p></div>
                         
                 }

@@ -5,11 +5,11 @@ import Counter from '../Layout/Counter';
 
 //
 
-const LeagueTransfers = ({ filterByLeague, ...props }) => {
+const LeagueTransfers = ({ byLeague, ...props }) => {
 
     let { country, league } = useParams();
 
-    const filtered = filterByLeague(country, league);
+    const filtered = byLeague(country, league);
 
     return filtered.length > 0 
         ? <div> <Counter length={filtered.length} /> <Transfers filtered={filtered} {...props} /> </div>
