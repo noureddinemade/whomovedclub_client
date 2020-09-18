@@ -83,6 +83,36 @@ div.player
 
         // Children
 
+        span.blank
+
+            display: inline-block
+            position: relative
+            z-index: 2
+
+            width: 40px
+            height: 40px
+
+            text-align: center
+            line-height: 36px
+            font-weight: 700
+
+            background-color: $light
+            border: 3px dotted $dark
+            border-radius: 50px
+
+            // Classes
+            
+            &.out
+
+                position: absolute
+                z-index: 1
+
+                top: 10%
+
+                opacity: .3
+                
+                +transform((scale, translateX), (.7, -70%))
+
         img
 
             position: relative
@@ -93,9 +123,9 @@ div.player
 
             object-fit: contain
 
-            // Psuedo
+            // Classes
 
-            &:first-of-type
+            &.out
 
                 position: absolute
                 z-index: 1

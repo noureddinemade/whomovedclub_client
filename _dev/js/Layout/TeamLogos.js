@@ -5,19 +5,28 @@ const TeamLogos = ({ teams, current }) => {
     const teamIn        = teams.filter(a => a.teamID === current.team.in.id);
     const teamOut       = teams.filter(a => a.teamID === current.team.out.id);
 
-    const image = { 
+    const name = {
 
-        in: teamIn.length > 0 ? teamIn[0].logo : require('../../img/nocrest.png'), 
-        out: teamOut.length > 0 ? teamOut[0].logo : require('../../img/nocrest.png') 
+        in:     current.team.in.name.charAt(0),
+        out:    current.team.out.name.charAt(0)
 
-    };
+    }
 
     return (
 
         <div className="teamLogos">
 
-            <img src={image.out} alt={current.team.out.name} />
-            <img src={image.in} alt={current.team.in.name}/>
+            {
+                teamOut.length > 0 
+                    ? <img src={teamOut[0].logo} alt={current.team.out.name} className="out"/>
+                    : <span className="blank out">{name.out}</span>
+            }
+
+            {
+                teamIn.length > 0 
+                    ? <img src={teamIn[0].logo} alt={current.team.in.name}/>
+                    : <span className="blank">{name.in}</span>
+            }
 
         </div>
 

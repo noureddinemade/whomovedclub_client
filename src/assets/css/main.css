@@ -463,13 +463,33 @@ div.transfers {
       @media screen and (max-width: 800px) {
         div.transfers div.player div.teamLogos, div.transfers p.notice div.teamLogos {
           display: none; } }
+      div.transfers div.player div.teamLogos span.blank, div.transfers p.notice div.teamLogos span.blank {
+        display: inline-block;
+        position: relative;
+        z-index: 2;
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        line-height: 36px;
+        font-weight: 700;
+        background-color: #ffffff;
+        border: 3px dotted #222222;
+        border-radius: 50px; }
+        div.transfers div.player div.teamLogos span.blank.out, div.transfers p.notice div.teamLogos span.blank.out {
+          position: absolute;
+          z-index: 1;
+          top: 10%;
+          opacity: .3;
+          -webkit-transform: scale(0.7) translateX(-70%);
+          -ms-transform: scale(0.7) translateX(-70%);
+          transform: scale(0.7) translateX(-70%); }
       div.transfers div.player div.teamLogos img, div.transfers p.notice div.teamLogos img {
         position: relative;
         z-index: 2;
         width: auto;
         height: 50px;
         object-fit: contain; }
-        div.transfers div.player div.teamLogos img:first-of-type, div.transfers p.notice div.teamLogos img:first-of-type {
+        div.transfers div.player div.teamLogos img.out, div.transfers p.notice div.teamLogos img.out {
           position: absolute;
           z-index: 1;
           opacity: .3;

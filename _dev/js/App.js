@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import Home from './Home';
+import Loading from './Loading';
 
 class App extends Component {
 
@@ -61,11 +62,12 @@ class App extends Component {
         duplicatePlayer: (current, list) => {
 
             const nameCondition     = list.filter(a => a.name === current.name);
+            const nameCondition2    = list.filter(a => a.name.slice(-3) === current.name.slice(-3));
             const typeCondition     = list.filter(a => a.type === current.type);
             const teamInCondition   = list.filter(a => a.team.in.id === current.team.in.id);
             const teamOutCondition  = list.filter(a => a.team.out.id === current.team.out.id);
 
-            if (nameCondition.length > 0) {
+            if (nameCondition.length > 0 || nameCondition2.length > 0) {
 
                 if (typeCondition.length > 0) {
 
@@ -243,6 +245,22 @@ class App extends Component {
 
             return result;
 
+        },
+
+        imWaiting: (count) => {
+
+            const messages = ['Almost there','Just one more thing','Hold on please']
+
+            if (this.state.loading) {
+
+                this.setState(prevState => ({
+
+                    loadingMessages: [...prevState.loadingMessages, messages[count]]
+    
+                }))
+
+            }
+
         }
 
     }
@@ -375,7 +393,13 @@ class App extends Component {
 
     componentDidMount() {
 
+        let count = 0;
+
         this.getData();
+
+        setTimeout(() => { this.actions.imWaiting(count); count = count + 1; }, 3000)
+        setTimeout(() => { this.actions.imWaiting(count); count = count + 1; }, 6000)
+        setTimeout(() => { this.actions.imWaiting(count); count = 0; }, 9000)
 
     }
 
@@ -391,7 +415,7 @@ class App extends Component {
 
                     !this.state.loading
                         ? <Home {...this.state} {...this.actions} {...this.filters} />
-                        : <div className="loading"><p>Loading</p></div>
+                        : <Loading messages={this.state.loadingMessages} />
                         
                 }
 
