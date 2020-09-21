@@ -83,35 +83,35 @@ div.player
 
         // Children
 
+        span.blank, img
+
+            // Class
+
+            &.out
+
+                margin-right: 10px
+
+                opacity: .2
+
+                +filter(grayscale, 1)
+
         span.blank
 
             display: inline-block
             position: relative
             z-index: 2
 
-            width: 40px
+            width: 34px
             height: 40px
 
             text-align: center
-            line-height: 36px
+            line-height: 32px
             font-weight: 700
+            color: $light
 
-            background-color: $light
-            border: 3px dotted $dark
-            border-radius: 50px
-
-            // Classes
-            
-            &.out
-
-                position: absolute
-                z-index: 1
-
-                top: 10%
-
-                opacity: .3
-                
-                +transform((scale, translateX), (.7, -70%))
+            background-color: $primary
+            border: 3px solid $dark
+            border-radius: 0 0 20px 20px
 
         img
 
@@ -119,17 +119,6 @@ div.player
             z-index: 2
             
             width: auto
-            height: 50px
+            height: 40px
 
             object-fit: contain
-
-            // Classes
-
-            &.out
-
-                position: absolute
-                z-index: 1
-
-                opacity: .3
-                
-                +transform((scale, translateX), (.7, -70%))

@@ -463,39 +463,30 @@ div.transfers {
       @media screen and (max-width: 800px) {
         div.transfers div.player div.teamLogos, div.transfers p.notice div.teamLogos {
           display: none; } }
+      div.transfers div.player div.teamLogos span.blank.out, div.transfers p.notice div.teamLogos span.blank.out, div.transfers div.player div.teamLogos img.out, div.transfers p.notice div.teamLogos img.out {
+        margin-right: 10px;
+        opacity: .2;
+        webkit-filter: grayscale(1);
+        filter: grayscale(1); }
       div.transfers div.player div.teamLogos span.blank, div.transfers p.notice div.teamLogos span.blank {
         display: inline-block;
         position: relative;
         z-index: 2;
-        width: 40px;
+        width: 34px;
         height: 40px;
         text-align: center;
-        line-height: 36px;
+        line-height: 32px;
         font-weight: 700;
-        background-color: #ffffff;
-        border: 3px dotted #222222;
-        border-radius: 50px; }
-        div.transfers div.player div.teamLogos span.blank.out, div.transfers p.notice div.teamLogos span.blank.out {
-          position: absolute;
-          z-index: 1;
-          top: 10%;
-          opacity: .3;
-          -webkit-transform: scale(0.7) translateX(-70%);
-          -ms-transform: scale(0.7) translateX(-70%);
-          transform: scale(0.7) translateX(-70%); }
+        color: #ffffff;
+        background-color: #03B37B;
+        border: 3px solid #222222;
+        border-radius: 0 0 20px 20px; }
       div.transfers div.player div.teamLogos img, div.transfers p.notice div.teamLogos img {
         position: relative;
         z-index: 2;
         width: auto;
-        height: 50px;
+        height: 40px;
         object-fit: contain; }
-        div.transfers div.player div.teamLogos img.out, div.transfers p.notice div.teamLogos img.out {
-          position: absolute;
-          z-index: 1;
-          opacity: .3;
-          -webkit-transform: scale(0.7) translateX(-70%);
-          -ms-transform: scale(0.7) translateX(-70%);
-          transform: scale(0.7) translateX(-70%); }
   div.transfers:hover div.player, div.transfers:hover p.notice {
     opacity: .3; }
 

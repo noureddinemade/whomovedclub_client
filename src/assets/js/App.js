@@ -23,78 +23,6 @@ class App extends Component {
 
     //
 
-    setup = {
-
-        daysBetween: (d1, d2) => {
-
-            const result = Math.abs(d1.getTime() - d2.getTime());
-            
-            return Math.floor(result / (1000 * 60 * 60 * 24));
-
-        },
-
-        dateCondition: (transferDate) => {
-
-            const d1    = new Date();
-            const d2    = new Date(transferDate);
-            const date  = this.setup.daysBetween(d1, d2);
-
-            if (date >= 60) {
-
-                return true;
-
-            }
-
-            else if (date < 0) {
-
-                return true;
-
-            }
-
-            else {
-
-                return false;
-
-            }
-
-        },
-
-        duplicatePlayer: (current, list) => {
-
-            const nameCondition     = list.filter(a => a.name === current.name);
-            const nameCondition2    = list.filter(a => a.name.slice(-3) === current.name.slice(-3));
-            const typeCondition     = list.filter(a => a.type === current.type);
-            const teamInCondition   = list.filter(a => a.team.in.id === current.team.in.id);
-            const teamOutCondition  = list.filter(a => a.team.out.id === current.team.out.id);
-
-            if (nameCondition.length > 0 || nameCondition2.length > 0) {
-
-                if (typeCondition.length > 0) {
-
-                    return true;
-
-                } else if (teamInCondition.length > 0 || teamOutCondition.length > 0) {
-
-                    return true;
-
-                } else {
-
-                    return false;
-
-                }
-
-            }
-
-            else {
-
-                return false;
-
-            }
-
-        }
-
-    }
-
     actions = {
 
         isDuplicate: (current, list) => {
@@ -364,10 +292,7 @@ class App extends Component {
             // eslint-disable-next-line
             await res2.map( p => {
 
-                const dateCondition         = this.setup.dateCondition(p.transferDate);
-                const duplicateCondition    = this.setup.duplicatePlayer(p, transfers);
-                
-                if (!dateCondition && !duplicateCondition) { transfers.push(p); };
+                transfers.push(p);
             
             });
 
