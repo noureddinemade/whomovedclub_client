@@ -292,7 +292,7 @@ p.status, div.transfers div.player span.name, div.transfers p.notice span.name {
     -ms-transform: rotate(-360deg) translateY(-70%);
     transform: rotate(-360deg) translateY(-70%); } }
 
-p.status:before, div.transfers div.player:before, div.transfers p.notice:before {
+p.status:before, div.transfers div.player:before, div.transfers p.notice:before, nav div.dropdown:before {
   font-family: "Material Icons";
   font-weight: normal;
   font-style: normal;
@@ -458,6 +458,9 @@ div.transfers {
       @media screen and (max-width: 1280px) {
         div.transfers div.player p, div.transfers p.notice p {
           width: 70%; } }
+      @media screen and (max-width: 800px) {
+        div.transfers div.player p, div.transfers p.notice p {
+          width: 100%; } }
     div.transfers div.player div.teamLogos, div.transfers p.notice div.teamLogos {
       position: relative; }
       @media screen and (max-width: 800px) {
@@ -495,52 +498,94 @@ nav {
   position: relative;
   margin-bottom: 25px;
   background-color: #ffffff; }
-  nav ul {
-    display: flex;
-    justify-content: space-between;
-    list-style: none; }
-    nav ul li {
-      display: inline-block; }
-      nav ul li a:before {
-        display: inline-block;
-        padding-right: 6px; }
-        @media screen and (max-width: 800px) {
-          nav ul li a:before {
-            padding: 0; } }
-      nav ul li a.active span.label {
-        border-bottom: 2px solid #03B37B; }
-      nav ul li a.disabled {
-        cursor: not-allowed;
-        opacity: .5;
-        webkit-filter: grayscale(100%) blur(2px);
-        filter: grayscale(100%) blur(2px); }
-      nav ul li a.all:before {
-        content: '🌍';
-        -webkit-animation-name: globe;
-        -webkit-animation-duration: 1s;
-        -webkit-animation-timing-function: linear;
-        -webkit-animation-iteration-count: infinite;
-        -webkit-animation-delay: 0s;
-        -webkit-animation-fill-mode: none;
-        animation-name: globe;
-        animation-duration: 1s;
-        animation-timing-function: linear;
-        animation-iteration-count: infinite;
-        animation-delay: 0s;
-        animation-fill-mode: none; }
-      nav ul li a.eng:before {
-        content: '🏴󠁧󠁢󠁥󠁮󠁧󠁿'; }
-      nav ul li a.spa:before {
-        content: '󠁧󠁢󠁥🇪🇸'; }
-      nav ul li a.ita:before {
-        content: '󠁧🇮🇹'; }
-      nav ul li a.ger:before {
-        content: '🇩🇪'; }
-      nav ul li a.fra:before {
-        content: '🇫🇷'; }
-      @media screen and (max-width: 800px) {
-        nav ul li a span.label {
-          display: none; } }
+  nav div.dropdown {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    font-size: 16px; }
+    nav div.dropdown:before {
+      content: 'keyboard_arrow_down';
+      position: absolute;
+      top: 50%;
+      right: 25px;
+      font-size: 40px;
+      color: #03B37B;
+      -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%); }
+    nav div.dropdown.show:before {
+      content: 'keyboard_arrow_up'; }
+    nav div.dropdown div.dropdown-menu, nav div.dropdown button {
+      width: 100%; }
+    nav div.dropdown button {
+      display: block;
+      position: relative;
+      height: 60px;
+      padding: 0 25px;
+      font-family: "Supply", sans-serif;
+      font-size: 20px;
+      text-align: left;
+      background-color: transparent;
+      border: 2px solid #222222;
+      outline: 0;
+      cursor: pointer; }
+      nav div.dropdown button span.disabled {
+        opacity: .2; }
+    nav div.dropdown div.dropdown-menu {
+      padding: 12.5px 0;
+      background-color: #ffffff;
+      border: 2px solid #222222; }
+      nav div.dropdown div.dropdown-menu a {
+        display: block;
+        width: 100%;
+        padding: 10px 25px;
+        color: #222222 !important; }
+        nav div.dropdown div.dropdown-menu a:before {
+          display: inline-block;
+          padding-right: 6px; }
+        nav div.dropdown div.dropdown-menu a:hover {
+          background-color: #04e59d; }
+        nav div.dropdown div.dropdown-menu a.disabled {
+          cursor: not-allowed;
+          opacity: .2;
+          webkit-filter: grayscale(100%);
+          filter: grayscale(100%); }
+        nav div.dropdown div.dropdown-menu a.all:before {
+          content: '🌍';
+          -webkit-animation-name: globe;
+          -webkit-animation-duration: 1s;
+          -webkit-animation-timing-function: linear;
+          -webkit-animation-iteration-count: infinite;
+          -webkit-animation-delay: 0s;
+          -webkit-animation-fill-mode: none;
+          animation-name: globe;
+          animation-duration: 1s;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+          animation-delay: 0s;
+          animation-fill-mode: none; }
+        nav div.dropdown div.dropdown-menu a.eng:before {
+          content: '🏴󠁧󠁢󠁥󠁮󠁧󠁿'; }
+        nav div.dropdown div.dropdown-menu a.spa:before {
+          content: '󠁧󠁢󠁥🇪🇸'; }
+        nav div.dropdown div.dropdown-menu a.ita:before {
+          content: '󠁧🇮🇹'; }
+        nav div.dropdown div.dropdown-menu a.ger:before {
+          content: '🇩🇪'; }
+        nav div.dropdown div.dropdown-menu a.fra:before {
+          content: '🇫🇷'; }
+        nav div.dropdown div.dropdown-menu a.usa:before {
+          content: '🇺🇸'; }
+        nav div.dropdown div.dropdown-menu a.mex:before {
+          content: '🇲🇽'; }
+        nav div.dropdown div.dropdown-menu a.por:before {
+          content: '🇵🇹'; }
+        nav div.dropdown div.dropdown-menu a.bra:before {
+          content: '🇧🇷'; }
+        nav div.dropdown div.dropdown-menu a.net:before {
+          content: '🇳🇱'; }
+        nav div.dropdown div.dropdown-menu a.sco:before {
+          content: '🏴󠁧󠁢󠁳󠁣󠁴󠁿'; }
 
 footer {
   position: fixed;

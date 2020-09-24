@@ -13,27 +13,91 @@ nav
 
     // Children
 
-    ul
+    div.dropdown
 
-        display: flex
-        justify-content: space-between
-        list-style: none
+        position: relative
+        z-index: 10
 
-        // Responsive
+        width: 100%
 
-        +screen($break)
+        font-size: $fontBase - 4px
 
-            // flex-direction: column
+        // Pseudo
+            
+        &:before
+
+            content: 'keyboard_arrow_down'
+
+            position: absolute
+
+            top: 50%
+            right: $globalSpace / 2
+
+            font-size: $fontBase * 2
+
+            color: $primary
+
+            +transform(translateY, -50%)
+
+            @extend %icon
+
+        // Classes
+        
+        &.show:before
+
+            content: 'keyboard_arrow_up'
 
         // Children
 
-        li
+        div.dropdown-menu, button
 
-            display: inline-block
+            width: 100%
+
+        button
+
+            display: block
+            position: relative
+
+            height: 60px
+
+            padding: 0 $globalSpace / 2
+
+            font-family: $fontMain
+            font-size: $fontBase
+            
+            text-align: left
+
+            background-color: transparent
+            border: 2px solid $dark
+
+            outline: 0
+
+            cursor: pointer
+
+            // Children
+
+            span.disabled
+
+                opacity: .2
+
+        div.dropdown-menu
+
+            padding: $globalSpace / 4 0
+
+            background-color: $light
+            border: 2px solid $dark
 
             // Children
 
             a
+
+                display: block
+
+                width: 100%
+                
+                padding: 10px $globalSpace / 2
+
+                color: $dark !important
 
                 // Pseudo
 
@@ -43,29 +107,21 @@ nav
 
                     padding-right: 6px
 
-                    // Responsive
+                // States
 
-                    +screen($break)
+                &:hover
 
-                        padding: 0
+                    background-color: $secondary
 
                 // Classes
-
-                &.active
-
-                    // Children
-
-                    span.label
-
-                        border-bottom: 2px solid $primary
 
                 &.disabled
 
                     cursor: not-allowed
 
-                    opacity: .5
+                    opacity: .2
 
-                    +filter((grayscale, blur), (100%, 2px))
+                    +filter(grayscale, 100%)
 
                 &.all:before
 
@@ -91,14 +147,28 @@ nav
 
                 &.fra:before
 
-                    content: '🇫🇷' 
+                    content: '🇫🇷'
+                
+                &.usa:before
 
-                // Children
+                    content: '🇺🇸'
+                
+                &.mex:before
 
-                span.label
+                    content: '🇲🇽'
 
-                    // Responsive
+                &.por:before
 
-                    +screen($break)
+                    content: '🇵🇹'
 
-                        display: none
+                &.bra:before
+
+                    content: '🇧🇷'
+
+                &.net:before
+
+                    content: '🇳🇱'
+
+                &.sco:before
+
+                    content: '🏴󠁧󠁢󠁳󠁣󠁴󠁿'

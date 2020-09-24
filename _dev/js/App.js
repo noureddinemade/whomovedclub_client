@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import Home from './Home';
 import Loading from './Loading';
 
@@ -18,6 +18,8 @@ class App extends Component {
             loadingMessages: []
 
         };
+
+        this.handleFilterChange = this.handleFilterChange.bind(this);
         
     };
 
@@ -312,7 +314,6 @@ class App extends Component {
         }
 
     }
-    
 
     //
 
@@ -326,6 +327,46 @@ class App extends Component {
         setTimeout(() => { this.actions.imWaiting(count); count = count + 1; }, 6000)
         setTimeout(() => { this.actions.imWaiting(count); count = 0; }, 9000)
 
+        let path        = this.props.location.pathname;
+        let splitPath   = path.split('/');
+
+        this.handleFilterChange(splitPath);
+
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+
+        if (prevProps !== this.props) {
+
+            let path        = this.props.location.pathname;
+            let splitPath   = path.split('/');
+
+            this.handleFilterChange(splitPath);
+
+        }
+
+    }
+
+    handleFilterChange(filter) {
+
+        const current = {
+
+            c: filter.length > 2 ? this.actions.removeDashes(filter[1]) : 'All',
+            l: filter.length > 2 ? this.actions.removeDashes(filter[2]) : 'All',
+            t: filter.length > 3 ? this.actions.removeDashes(filter[3]) : null,
+            d: filter.length > 4 ? this.actions.removeDashes(filter[4]) : null
+
+        }
+
+        this.setState({ 
+
+            filterCountry:      current.c,
+            filterLeague:       current.l,
+            filterTeam:         current.t,
+            filterDirection:    current.d
+
+        })
+
     }
 
     //
@@ -334,17 +375,10 @@ class App extends Component {
 
         return (
 
-            <main>
-
-                {
-
-                    !this.state.loading
-                        ? <Home {...this.state} {...this.actions} {...this.filters} />
-                        : <Loading messages={this.state.loadingMessages} />
-                        
-                }
-
-            </main>
+            !this.state.loading
+                ? <Home {...this.state} {...this.actions} {...this.filters} updateFilter={this.handleFilterChange} />
+                : <Loading messages={this.state.loadingMessages} />
+                    
 
         )
 
@@ -352,4 +386,4 @@ class App extends Component {
 
 };
 
-export default App;
+export default withRouter(App);

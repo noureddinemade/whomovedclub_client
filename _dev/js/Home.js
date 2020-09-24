@@ -1,5 +1,4 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from './Routes'
 import Info from './Layout/Info';
 import Footer from './Layout/Footer';
@@ -11,7 +10,7 @@ const Home = props => {
 
     return (
 
-        <Router>
+        <main>
 
             <Info />
 
@@ -24,7 +23,7 @@ const Home = props => {
 
             <Footer />
 
-        </Router>
+        </main>
 
     )
 

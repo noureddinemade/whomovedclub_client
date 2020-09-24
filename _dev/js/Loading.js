@@ -6,13 +6,17 @@ const Loading = ({ messages }) => {
 
     return (
 
-        <div className="loading">
+        <main>
 
-            <p>Loading</p>
+            <div className="loading">
 
-            { waiting }
+                <p>Loading</p>
 
-        </div>
+                { waiting }
+
+            </div>
+
+        </main>
 
     )
 

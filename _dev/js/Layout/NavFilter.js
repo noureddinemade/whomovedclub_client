@@ -1,7 +1,8 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import Dropdown from 'react-bootstrap/Dropdown';
+import { LinkContainer } from 'react-router-bootstrap';
 
-const NavFilter = ({ transfers, teams, byLeague, generateLinks, ...t }) => {
+const NavFilter = ({ transfers, teams, byLeague, generateLinks, updateFilter, ...t }) => {
 
     const link              = generateLinks(null, t);
     const tag               = t.country.substr(0,3).toLowerCase();
@@ -9,16 +10,16 @@ const NavFilter = ({ transfers, teams, byLeague, generateLinks, ...t }) => {
 
     return (
 
-        <li>
-            <NavLink 
-                exact to={ link.league }
-                className={ results.length === 0 ? `disabled ${tag}` : tag }
-            >
+        <LinkContainer 
+            to={link.league}
+            className={`dropdown-item ${tag} ${results.length === 0 ? 'disabled' : ''}`}
+        >
 
-                <span className="label">{ t.league }</span>
+            <Dropdown.Item>
+                { t.league } ({results.length})
+            </Dropdown.Item>
 
-            </NavLink>
-        </li>
+        </LinkContainer>
 
     )
 
