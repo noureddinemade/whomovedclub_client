@@ -4,6 +4,7 @@
     "private": true,
     "license": "",
     "dependencies": {
+        "@loadable/component": "^5.13.2",
         "bootstrap": "^4.5.2",
         "del": "^5.1.0",
         "gulp": "^4.0.2",

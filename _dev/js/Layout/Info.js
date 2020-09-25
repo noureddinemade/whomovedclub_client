@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import logo from '../../img/logo.svg';
 
 const Info = () => {
@@ -7,7 +8,11 @@ const Info = () => {
 
         <section className="info">
 
-            <h1><img src={logo} alt="" className="logo"/></h1>
+            <Link to="/">
+                <h1>
+                    <img src={logo} alt="" className="logo"/>
+                </h1>
+            </Link>
 
         </section>
 

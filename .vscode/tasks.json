@@ -3,7 +3,8 @@
 	"tasks": [
 		{
 			"type": "gulp",
-			"task": "default",
+            "task": "default",
+            "group": "test",
 			"problemMatcher": [],
 			"label": "gulp: default",
 			"runOptions": {
@@ -11,7 +12,8 @@
 			}
         },
         {
-			"type": "npm",
+            "type": "npm",
+            "group": "test",
 			"script": "start",
 			"label": "npm: start",
 			"runOptions": {

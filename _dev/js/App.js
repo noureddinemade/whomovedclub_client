@@ -281,11 +281,13 @@ class App extends Component {
 
         try {
 
+            const dateURL           = await fetch('https://whomovedclub.herokuapp.com/date');
             const teamsURL          = await fetch('https://whomovedclub.herokuapp.com/teams');
             const transfersURL      = await fetch('https://whomovedclub.herokuapp.com/transfers');
 
             let res1 = await teamsURL.json();
             let res2 = await transfersURL.json();
+            let res3 = await dateURL.json();
 
             res2 = await res2.sort((a,b) => new Date(b.transferDate) - new Date(a.transferDate));
             
@@ -298,12 +300,10 @@ class App extends Component {
             
             });
 
-            const lastUpdated = transfers.length > 0 ? transfers[0].lastUpdated : null; 
-
             this.setState({
                 teams: teams,
                 transfers: transfers,
-                lastUpdated: lastUpdated,
+                lastUpdated: res3[0].date,
                 loading: false
             })
 
