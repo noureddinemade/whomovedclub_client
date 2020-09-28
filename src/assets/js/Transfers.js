@@ -1,9 +1,11 @@
 import React from 'react';
 import Player from './Layout/Player';
 
-const Transfers = ({ transfers, filtered, ...props }) => {
-    
-    const results = filtered ? filtered : transfers;
+const Transfers = props => {
+
+    const { filter } = props;
+
+    const results = filter();
 
     return (
         

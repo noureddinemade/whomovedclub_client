@@ -74,6 +74,12 @@ nav
 
             cursor: pointer
 
+            // Pseudo
+
+            &:before
+
+                padding-right: 10px
+
             // Children
 
             span.disabled
@@ -103,8 +109,6 @@ nav
 
                 &:before
 
-                    display: inline-block
-
                     padding-right: 6px
 
                 // States
@@ -123,52 +127,62 @@ nav
 
                     +filter(grayscale, 100%)
 
-                &.all:before
+        button, div.dropdown-menu a
 
-                    content: '🌍'
+            // Pseudo
 
-                    +animation(globe, 1s, linear, infinite)
+            &:before
 
-                &.eng:before
+                display: inline-block
 
-                    content: '🏴󠁧󠁢󠁥󠁮󠁧󠁿'
+            // Classes
 
-                &.spa:before
+            &.all:before
 
-                    content: '󠁧󠁢󠁥🇪🇸'
+                content: '🌍'
 
-                &.ita:before
+                +animation(globe, 1s, linear, infinite)
 
-                    content: '󠁧🇮🇹'
+            &.eng:before
 
-                &.ger:before
+                content: '🏴󠁧󠁢󠁥󠁮󠁧󠁿'
 
-                    content: '🇩🇪'
+            &.spa:before
 
-                &.fra:before
+                content: '󠁧󠁢󠁥🇪🇸'
 
-                    content: '🇫🇷'
-                
-                &.usa:before
+            &.ita:before
 
-                    content: '🇺🇸'
-                
-                &.mex:before
+                content: '󠁧🇮🇹'
 
-                    content: '🇲🇽'
+            &.ger:before
 
-                &.por:before
+                content: '🇩🇪'
 
-                    content: '🇵🇹'
+            &.fra:before
 
-                &.bra:before
+                content: '🇫🇷'
+            
+            &.ame:before
 
-                    content: '🇧🇷'
+                content: '🇺🇸🇨🇦'
+            
+            &.mex:before
 
-                &.net:before
+                content: '🇲🇽'
 
-                    content: '🇳🇱'
+            &.por:before
 
-                &.sco:before
+                content: '🇵🇹'
 
-                    content: '🏴󠁧󠁢󠁳󠁣󠁴󠁿'
+            &.bra:before
+
+                content: '🇧🇷'
+
+            &.net:before
+
+                content: '🇳🇱'
+
+            &.sco:before
+
+                content: '🏴󠁧󠁢󠁳󠁣󠁴󠁿'

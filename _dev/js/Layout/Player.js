@@ -4,9 +4,9 @@ import TeamLogos from './TeamLogos';
 
 const Player = props => {
 
-    const { t, generateInfo }    = props;
+    const { t, generateInfo } = props;
 
-    const transfer      = generateInfo(t);
+    const transfer = generateInfo(t);
 
     return (
 

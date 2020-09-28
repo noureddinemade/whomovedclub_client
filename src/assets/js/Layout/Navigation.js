@@ -1,29 +1,19 @@
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { LinkContainer } from 'react-router-bootstrap';
 import Moment from 'react-moment';
+
 import NavFilter from './NavFilter';
+
+//
 
 const Navigation = props => {
 
-    const { teams, isDuplicate, transfers, lastUpdated, filterLeague, filterTeam, filterDirection  } = props;
+    const { nav, lastUpdated, country, league, updateFilter, count } = props;
+    const results = { c: country, l: league};
 
-    let leagues     = [];
+    let tag = country ? country.substr(0,3).toLowerCase() : 'all';
 
-    // eslint-disable-next-line
-    const links = teams.map((t,i) => { 
-
-        const condition = isDuplicate(t.league, leagues);
-
-        if (!condition) {
-
-            leagues.push(t.league);
-
-            return <NavFilter {...t} {...props} key={i} />;
-
-        }
-
-    });
+    const links = nav.map((t,i) => <NavFilter label={t} key={i} updateFilter={updateFilter} count={count} /> );
 
     return (
 
@@ -33,22 +23,13 @@ const Navigation = props => {
 
             <Dropdown>
 
-                <Dropdown.Toggle id="dropdown-basic">
-                    { filterLeague } 
-                    <span className="disabled">{ filterTeam ? ` / ${filterTeam}` : '' }
-                    { filterDirection ? ` / ${filterDirection}` : '' }</span>
+                <Dropdown.Toggle id="dropdown-basic" className={tag}>
+                    { league ? `${league} (${count(results)})` : 'All' }
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
 
-                    <LinkContainer 
-                        to="/"
-                        className={`dropdown-item all ${transfers.length === 0 ? 'disabled' : ''}`}
-                    >
-
-                        <Dropdown.Item>All</Dropdown.Item>
-                        
-                    </LinkContainer>
+                    <Dropdown.Item className="all" onClick={() => updateFilter()}>All</Dropdown.Item>
 
                     { links }
 
@@ -61,5 +42,7 @@ const Navigation = props => {
     )
 
 }
+
+//
 
 export default Navigation;

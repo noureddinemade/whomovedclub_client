@@ -1,18 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
 import logo from '../../img/logo.svg';
 
-const Info = () => {
+const Info = ({ reset }) => {
 
     return (
 
         <section className="info">
 
-            <Link to="/">
-                <h1>
-                    <img src={logo} alt="" className="logo"/>
-                </h1>
-            </Link>
+            <h1 onClick={ () => reset() }>
+                <img src={logo} alt="" className="logo"/>
+            </h1>
 
         </section>
 

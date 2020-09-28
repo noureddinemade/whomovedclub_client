@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom'
+
 import Home from './Home';
 import Loading from './Loading';
+
+//
 
 class App extends Component {
 
@@ -11,19 +13,105 @@ class App extends Component {
 
         this.state = {
 
+            nav: [],
             teams: [],
             transfers: [],
             lastUpdated: '',
+            country: null,
+            league: null,
+            team: null,
+            direction: null,
+            filtered: [],
             loading: true,
             loadingMessages: []
 
         };
-
-        this.handleFilterChange = this.handleFilterChange.bind(this);
         
     };
 
     //
+
+    filters = {
+
+        country: (c = this.state.country, teams = this.state.teams) => {
+
+            return c ? teams.filter(team => team.country === c) : teams;
+
+        },
+
+        league: (c = this.filters.country(), l = this.state.league) => {
+
+            return l ? c.filter(team => team.league === l) : c;
+
+        },
+
+        team: (l = this.filters.league(), t = this.state.team) => {
+
+            return t ? l.filter(team => team.name === t) : l ;
+
+        },
+
+        display: (transfers = this.state.transfers, t = this.state.team, d = this.state.direction) => {
+
+            let results = []
+
+            if (t) {
+
+                const filter = this.filters.team();
+
+                // eslint-disable-next-line
+                filter.map(t => {
+
+                    if (d === 'in') {
+
+                        // eslint-disable-next-line
+                        transfers.filter(p => p.team.in.id === t.teamID).map(p => {
+
+                            results.push(p);
+    
+                        })
+
+                    }
+
+                    else if (d === 'out') {
+
+                        // eslint-disable-next-line
+                        transfers.filter(p => p.team.out.id === t.teamID).map(p => {
+
+                            results.push(p);
+    
+                        })
+
+                    }
+
+                })
+
+            }
+
+            else {
+
+                const filter = this.filters.league();
+
+                // eslint-disable-next-line
+                filter.map(t => {
+
+                    // eslint-disable-next-line
+                    transfers.filter(p => p.team.in.id === t.teamID).map(p => {
+
+                        results.push(p);
+
+                    })
+
+                })
+
+            }
+
+
+            return results;
+
+        }
+
+    }
 
     actions = {
 
@@ -37,97 +125,6 @@ class App extends Component {
         
             }
         
-        },
-
-        addDashes: (string) => {
-
-            return string.replace(/ /g, '-');
-
-        },
-
-        removeDashes: (string) => {
-
-            return string.replace(/-/g, ' ');
-
-        },
-
-        generateLinks: (current = null, nav = null, teams = this.state.teams) => {
-
-            let result;
-            let teamIn;
-            let teamOut;
-            let leagueIn;
-            let teamInLink;
-            let teamOutLink;
-            let leagueInLink;
-
-            if (current) {
-
-                const teamInFilter    = teams.filter(team => team.teamID === current.team.in.id);
-                const teamOutFilter   = teams.filter(team => team.teamID === current.team.out.id);
-    
-                if (teamInFilter !== 'undefined' && teamInFilter.length > 0) {
-    
-                    teamIn = {
-    
-                        name:       this.actions.addDashes(teamInFilter[0].name),
-                        country:    this.actions.addDashes(teamInFilter[0].country),
-                        league:     this.actions.addDashes(teamInFilter[0].league)
-    
-                    }
-    
-                    teamInLink = <Link to={`/${teamIn.country}/${teamIn.league}/${teamIn.name}/in`} className="to">{current.team.in.name}</Link>;
-    
-                } else {
-
-                    teamInLink  = current.team.in.name;
-    
-                } 
-    
-                if (teamOutFilter !== 'undefined' && teamOutFilter.length > 0) {
-    
-                    teamOut = {
-    
-                        name:       this.actions.addDashes(teamOutFilter[0].name),
-                        country:    this.actions.addDashes(teamOutFilter[0].country),
-                        league:     this.actions.addDashes(teamOutFilter[0].league)
-    
-                    }
-    
-                    teamOutLink = <Link to={`/${teamOut.country}/${teamOut.league}/${teamOut.name}/out`} className="from">{current.team.out.name}</Link>;
-    
-                } else {
-    
-                    teamOutLink  = current.team.out.name;
-    
-                }
-
-            }
-            else if (nav) {
-
-                leagueIn = {
-
-                    country: this.actions.addDashes(nav.country),
-                    league: this.actions.addDashes(nav.league),
-
-                }
-
-                leagueInLink = `/${leagueIn.country}/${leagueIn.league}`;
-
-            }
-
-            //
-
-            result = {
-
-                in:     teamInLink,
-                out:    teamOutLink,
-                league: leagueInLink
-
-            };
-
-            return result;
-
         },
 
         generateInfo: (t) => {
@@ -169,7 +166,7 @@ class App extends Component {
                 cost: cost,
                 type: type,
                 date: t.transferDate,
-                link: this.actions.generateLinks(t)
+                link: null
 
             }
 
@@ -191,82 +188,38 @@ class App extends Component {
 
             }
 
-        }
-
-    }
-
-    filters = {
-
-        start: (country, league, teams = this.state.teams) => {
-
-            const c             = this.actions.removeDashes(country);
-            const l             = this.actions.removeDashes(league);
-            const countryFilter = teams.filter(team => team.country === c);
-            const leagueFilter  = countryFilter.filter(team => team.league === l);
-
-            return leagueFilter;
-
         },
 
-        byTeam: (country, league, current, direction, transfers = this.state.transfers) => {
+        updateFilter: (filter) => {
 
-            let results = [];
-
-            const t             = this.actions.removeDashes(current);
-            const filter        = this.filters.start(country, league);
-            const teamFilter    = filter.filter(team => team.name === t);
-
-            // eslint-disable-next-line
-            transfers.map(p => {
-
-                if (direction === 'in') {
-
-                    if (p.team.in.id === teamFilter[0].teamID) {
-
-                        results.push(p);
-
-                    }
-
-                }
-
-                else if (direction === 'out') {
-
-                    if (p.team.out.id === teamFilter[0].teamID) {
-
-                        results.push(p);
-
-                    }
-
-                }
-
-                else {
-
-                    results = null;
-
-                }
-
-            });
-
-            return results.sort((a,b) => new Date(b.transferDate) - new Date(a.transferDate));
-
+            this.setState({
+    
+                country:    filter ? filter.c : null,
+                league:     filter ? filter.l : null,
+                team:       filter ? filter.t : null,
+                direction:  filter ? filter.d : null,
+    
+            })
+    
         },
 
-        byLeague: (country, league, transfers = this.state.transfers) => {
+        count: (filters, transfers = this.state.transfers) => {
+            
+            const { c, l } = filters;
 
-            let results = [];
+            const f1 = this.filters.country(c);
+            const f2 = this.filters.league(f1, l);
 
-            const filter = this.filters.start(country, league);
+            let count = 0;
 
-            // eslint-disable-next-line
-            filter.map(t => {
+            //eslint-disable-next-line
+            f2.map(t => {
 
-                const res = transfers.filter(transfer => transfer.team.in.id === t.teamID);
-        
-                if (res.length > 0) { res.map(t => results.push(t)) };
+                count = count + transfers.filter(p => p.team.in.id === t.teamID).length;
 
-            });
+            })
 
-            return results.sort((a,b) => new Date(b.transferDate) - new Date(a.transferDate));
+            return count;
 
         }
 
@@ -288,11 +241,23 @@ class App extends Component {
             let res1 = await teamsURL.json();
             let res2 = await transfersURL.json();
             let res3 = await dateURL.json();
+            
+            let leagues = [];
 
             res2 = await res2.sort((a,b) => new Date(b.transferDate) - new Date(a.transferDate));
             
             // eslint-disable-next-line
-            await res1.map( t => teams.push(t) );
+            await res1.map( t => {
+
+                const s = `${t.country}/${t.league}` 
+                const l = this.actions.isDuplicate(s, leagues);
+
+                if (!l) leagues.push(s);
+
+                teams.push(t);
+
+            });
+
             // eslint-disable-next-line
             await res2.map( p => {
 
@@ -301,6 +266,7 @@ class App extends Component {
             });
 
             this.setState({
+                nav: leagues,
                 teams: teams,
                 transfers: transfers,
                 lastUpdated: res3[0].date,
@@ -319,53 +285,7 @@ class App extends Component {
 
     componentDidMount() {
 
-        let count = 0;
-
         this.getData();
-
-        setTimeout(() => { this.actions.imWaiting(count); count = count + 1; }, 3000)
-        setTimeout(() => { this.actions.imWaiting(count); count = count + 1; }, 6000)
-        setTimeout(() => { this.actions.imWaiting(count); count = 0; }, 9000)
-
-        let path        = this.props.location.pathname;
-        let splitPath   = path.split('/');
-
-        this.handleFilterChange(splitPath);
-
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-
-        if (prevProps !== this.props) {
-
-            let path        = this.props.location.pathname;
-            let splitPath   = path.split('/');
-
-            this.handleFilterChange(splitPath);
-
-        }
-
-    }
-
-    handleFilterChange(filter) {
-
-        const current = {
-
-            c: filter.length > 2 ? this.actions.removeDashes(filter[1]) : 'All',
-            l: filter.length > 2 ? this.actions.removeDashes(filter[2]) : 'All',
-            t: filter.length > 3 ? this.actions.removeDashes(filter[3]) : null,
-            d: filter.length > 4 ? this.actions.removeDashes(filter[4]) : null
-
-        }
-
-        this.setState({ 
-
-            filterCountry:      current.c,
-            filterLeague:       current.l,
-            filterTeam:         current.t,
-            filterDirection:    current.d
-
-        })
 
     }
 
@@ -376,7 +296,7 @@ class App extends Component {
         return (
 
             !this.state.loading
-                ? <Home {...this.state} {...this.actions} {...this.filters} updateFilter={this.handleFilterChange} />
+                ? <Home {...this.actions} {...this.state} filter={this.filters.display} />
                 : <Loading messages={this.state.loadingMessages} />
                     
 
@@ -386,4 +306,4 @@ class App extends Component {
 
 };
 
-export default withRouter(App);
+export default App;

@@ -1,23 +1,25 @@
 import React from 'react';
-import Routes from './Routes'
+
 import Info from './Layout/Info';
 import Footer from './Layout/Footer';
 import Navigation from './Layout/Navigation';
+import Transfers from './Transfers';
 
 //
 
 const Home = props => {
+    
 
     return (
 
         <main>
 
-            <Info />
+            <Info reset={props.updateFilter}/>
 
             <section className="content">
 
                 <Navigation {...props} />
-                <Routes {...props} />
+                <Transfers {...props} />
 
             </section>
 

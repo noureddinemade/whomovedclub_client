@@ -529,6 +529,8 @@ nav {
       border: 2px solid #222222;
       outline: 0;
       cursor: pointer; }
+      nav div.dropdown button:before {
+        padding-right: 10px; }
       nav div.dropdown button span.disabled {
         opacity: .2; }
     nav div.dropdown div.dropdown-menu {
@@ -541,7 +543,6 @@ nav {
         padding: 10px 25px;
         color: #222222 !important; }
         nav div.dropdown div.dropdown-menu a:before {
-          display: inline-block;
           padding-right: 6px; }
         nav div.dropdown div.dropdown-menu a:hover {
           background-color: #04e59d; }
@@ -550,42 +551,44 @@ nav {
           opacity: .2;
           webkit-filter: grayscale(100%);
           filter: grayscale(100%); }
-        nav div.dropdown div.dropdown-menu a.all:before {
-          content: '🌍';
-          -webkit-animation-name: globe;
-          -webkit-animation-duration: 1s;
-          -webkit-animation-timing-function: linear;
-          -webkit-animation-iteration-count: infinite;
-          -webkit-animation-delay: 0s;
-          -webkit-animation-fill-mode: none;
-          animation-name: globe;
-          animation-duration: 1s;
-          animation-timing-function: linear;
-          animation-iteration-count: infinite;
-          animation-delay: 0s;
-          animation-fill-mode: none; }
-        nav div.dropdown div.dropdown-menu a.eng:before {
-          content: '🏴󠁧󠁢󠁥󠁮󠁧󠁿'; }
-        nav div.dropdown div.dropdown-menu a.spa:before {
-          content: '󠁧󠁢󠁥🇪🇸'; }
-        nav div.dropdown div.dropdown-menu a.ita:before {
-          content: '󠁧🇮🇹'; }
-        nav div.dropdown div.dropdown-menu a.ger:before {
-          content: '🇩🇪'; }
-        nav div.dropdown div.dropdown-menu a.fra:before {
-          content: '🇫🇷'; }
-        nav div.dropdown div.dropdown-menu a.usa:before {
-          content: '🇺🇸'; }
-        nav div.dropdown div.dropdown-menu a.mex:before {
-          content: '🇲🇽'; }
-        nav div.dropdown div.dropdown-menu a.por:before {
-          content: '🇵🇹'; }
-        nav div.dropdown div.dropdown-menu a.bra:before {
-          content: '🇧🇷'; }
-        nav div.dropdown div.dropdown-menu a.net:before {
-          content: '🇳🇱'; }
-        nav div.dropdown div.dropdown-menu a.sco:before {
-          content: '🏴󠁧󠁢󠁳󠁣󠁴󠁿'; }
+    nav div.dropdown button:before, nav div.dropdown div.dropdown-menu a:before {
+      display: inline-block; }
+    nav div.dropdown button.all:before, nav div.dropdown div.dropdown-menu a.all:before {
+      content: '🌍';
+      -webkit-animation-name: globe;
+      -webkit-animation-duration: 1s;
+      -webkit-animation-timing-function: linear;
+      -webkit-animation-iteration-count: infinite;
+      -webkit-animation-delay: 0s;
+      -webkit-animation-fill-mode: none;
+      animation-name: globe;
+      animation-duration: 1s;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      animation-delay: 0s;
+      animation-fill-mode: none; }
+    nav div.dropdown button.eng:before, nav div.dropdown div.dropdown-menu a.eng:before {
+      content: '🏴󠁧󠁢󠁥󠁮󠁧󠁿'; }
+    nav div.dropdown button.spa:before, nav div.dropdown div.dropdown-menu a.spa:before {
+      content: '󠁧󠁢󠁥🇪🇸'; }
+    nav div.dropdown button.ita:before, nav div.dropdown div.dropdown-menu a.ita:before {
+      content: '󠁧🇮🇹'; }
+    nav div.dropdown button.ger:before, nav div.dropdown div.dropdown-menu a.ger:before {
+      content: '🇩🇪'; }
+    nav div.dropdown button.fra:before, nav div.dropdown div.dropdown-menu a.fra:before {
+      content: '🇫🇷'; }
+    nav div.dropdown button.ame:before, nav div.dropdown div.dropdown-menu a.ame:before {
+      content: '🇺🇸🇨🇦'; }
+    nav div.dropdown button.mex:before, nav div.dropdown div.dropdown-menu a.mex:before {
+      content: '🇲🇽'; }
+    nav div.dropdown button.por:before, nav div.dropdown div.dropdown-menu a.por:before {
+      content: '🇵🇹'; }
+    nav div.dropdown button.bra:before, nav div.dropdown div.dropdown-menu a.bra:before {
+      content: '🇧🇷'; }
+    nav div.dropdown button.net:before, nav div.dropdown div.dropdown-menu a.net:before {
+      content: '🇳🇱'; }
+    nav div.dropdown button.sco:before, nav div.dropdown div.dropdown-menu a.sco:before {
+      content: '🏴󠁧󠁢󠁳󠁣󠁴󠁿'; }
 
 footer {
   position: fixed;

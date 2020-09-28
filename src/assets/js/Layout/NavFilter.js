@@ -1,25 +1,29 @@
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { LinkContainer } from 'react-router-bootstrap';
 
-const NavFilter = ({ transfers, teams, byLeague, generateLinks, updateFilter, ...t }) => {
+const NavFilter = ({ updateFilter, count, label }) => {
 
-    const link              = generateLinks(null, t);
-    const tag               = t.country.substr(0,3).toLowerCase();
-    const results           = byLeague(t.country, t.league);
+    const t         = label.split('/');
+    const tag       = t[0].substr(0,3).toLowerCase();
+    
+    const filters   = { 
+
+        c: t[0],
+        l: t[1],
+        t: null,
+        d: null
+        
+     }
+     const results = count(filters);
 
     return (
 
-        <LinkContainer 
-            to={link.league}
-            className={`dropdown-item ${tag} ${results.length === 0 ? 'disabled' : ''}`}
+        <Dropdown.Item 
+            className={`${tag} ${results === 0 ? 'disabled' : ''}`} 
+            onClick={ (e) => results > 0 ?  updateFilter(filters) : null }
         >
-
-            <Dropdown.Item>
-                { t.league } ({results.length})
-            </Dropdown.Item>
-
-        </LinkContainer>
+            { t[1] } ({ results })
+        </Dropdown.Item>
 
     )
 
