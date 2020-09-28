@@ -4,9 +4,10 @@ import TeamLogos from './TeamLogos';
 
 const Player = props => {
 
-    const { t, generateInfo } = props;
+    const { t, generateInfo, updateFilter } = props;
 
-    const transfer = generateInfo(t);
+    const transfer  = generateInfo(t);
+    const filter    = { in: { t: t.team.in.id, d: 'in' }, out: { t: t.team.out.id, d: 'out' }  };
 
     return (
 
@@ -14,7 +15,7 @@ const Player = props => {
 
             <p> 
 
-                <span className="name">{ transfer.name }</span> was { transfer.type } to { transfer.link.in } from { transfer.link.out } <span className="date"><Moment to={ transfer.date } /></span><span>{ transfer.cost }</span>
+                <span className="name">{ transfer.name }</span> was { transfer.type } to <button onClick={() => updateFilter(filter.in) }>{ t.team.in.name }</button> from <button onClick={() => updateFilter(filter.out) }>{ t.team.out.name }</button> <span className="date"><Moment to={ transfer.date } /></span><span>{ transfer.cost }</span>
 
             </p>
 

@@ -8,10 +8,16 @@ const Transfers = props => {
     const results = filter();
 
     return (
+
+        <div className="transfers">
         
-        results.length > 0
-            ? results.map((t,i) => <Player {...props} key={i} t={t} /> )
-            : ''
+            { 
+                results.length > 0
+                    ? results.map((t,i) => <Player {...props} key={i} t={t} /> )
+                    : ''
+            }
+
+        </div>
     
     )
 

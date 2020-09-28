@@ -47,7 +47,7 @@ class App extends Component {
 
         team: (l = this.filters.league(), t = this.state.team) => {
 
-            return t ? l.filter(team => team.name === t) : l ;
+            return t ? l.filter(team => team.teamID === t) : l;
 
         },
 
@@ -107,7 +107,7 @@ class App extends Component {
             }
 
 
-            return results;
+            return results.sort((a,b) => new Date(b.transferDate) - new Date(a.transferDate));
 
         }
 
@@ -135,29 +135,11 @@ class App extends Component {
             const name = t.name.includes('&apos;') ? t.name.replace('&apos;', "'") : t.name;
             const type = t.type === 'Loan' ? 'loaned' : 'transferred';
 
-            if (t.type === 'Free') {
-
-                cost = ' for free.'
-
-            }
-
-            else if (t.type === 'Loan') {
-
-                cost = '.'
-
-            }
-
-            else if (t.type.charAt(0) !== '€') {
-
-                cost = ` for €${cost}.`;
-
-            }
-
-            else {
-
-                cost = ` for ${cost}.`
-
-            }
+            t.type === 'Free' 
+                ? cost = ' for free.'
+                : t.type === 'Loan' ? cost = '.'
+                : t.type.charAt(0) !== '€' ? cost = ` for €${cost}.`
+                : cost = ` for ${cost}.`
             
 
             result = {
@@ -165,8 +147,7 @@ class App extends Component {
                 name: name,
                 cost: cost,
                 type: type,
-                date: t.transferDate,
-                link: null
+                date: t.transferDate
 
             }
 
@@ -194,10 +175,10 @@ class App extends Component {
 
             this.setState({
     
-                country:    filter ? filter.c : null,
-                league:     filter ? filter.l : null,
-                team:       filter ? filter.t : null,
-                direction:  filter ? filter.d : null,
+                country:    filter && filter.c ? filter.c : null,
+                league:     filter && filter.l ? filter.l : null,
+                team:       filter && filter.t ? filter.t : null,
+                direction:  filter && filter.d ? filter.d : null,
     
             })
     
