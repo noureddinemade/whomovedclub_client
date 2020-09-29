@@ -1,9 +1,7 @@
 import React from 'react';
 import Player from './Layout/Player';
 
-const Transfers = props => {
-
-    const { filter } = props;
+const Transfers = ({ filter, filtering, generateInfo, updateFilter, teams }) => {
 
     const results = filter();
 
@@ -11,10 +9,14 @@ const Transfers = props => {
 
         <div className="transfers">
         
-            { 
-                results.length > 0
-                    ? results.map((t,i) => <Player {...props} key={i} t={t} /> )
-                    : ''
+            {
+
+                !filtering
+                    ? results.length > 0
+                        ? results.map((t,i) => <Player key={i} t={t} generateInfo={generateInfo} updateFilter={updateFilter} teams={teams} /> )
+                        : ''
+                    : <div>Loading...</div>
+
             }
 
         </div>

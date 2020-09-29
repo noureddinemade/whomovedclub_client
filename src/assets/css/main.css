@@ -447,12 +447,21 @@ div.transfers {
     div.transfers div.player:hover, div.transfers p.notice:hover {
       opacity: 1 !important;
       box-shadow: 4px 4px 0 #03B37B; }
-    div.transfers div.player a.to, div.transfers p.notice a.to {
-      color: #03B37B;
-      border-bottom: 2px dotted #03B37B; }
-    div.transfers div.player a.from, div.transfers p.notice a.from {
-      color: #FF1F4E;
-      border-bottom: 2px dotted #FF1F4E; }
+    div.transfers div.player button, div.transfers p.notice button {
+      padding: 0;
+      margin: 0;
+      font-size: 20px;
+      font-family: "Supply", sans-serif;
+      background-color: transparent;
+      border: 0;
+      outline: 0;
+      cursor: pointer; }
+      div.transfers div.player button.in, div.transfers p.notice button.in {
+        color: #03B37B;
+        border-bottom: 2px dotted #03B37B; }
+      div.transfers div.player button.out, div.transfers p.notice button.out {
+        color: #FF1F4E;
+        border-bottom: 2px dotted #FF1F4E; }
     div.transfers div.player p, div.transfers p.notice p {
       width: 80%; }
       @media screen and (max-width: 1280px) {

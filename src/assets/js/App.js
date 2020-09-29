@@ -17,11 +17,8 @@ class App extends Component {
             teams: [],
             transfers: [],
             lastUpdated: '',
-            country: null,
-            league: null,
-            team: null,
-            direction: null,
-            filtered: [],
+            filters: [],
+            filtering: false,
             loading: true,
             loadingMessages: []
 
@@ -33,25 +30,25 @@ class App extends Component {
 
     filters = {
 
-        country: (c = this.state.country, teams = this.state.teams) => {
+        country: (c = this.state.filters[0], teams = this.state.teams) => {
 
             return c ? teams.filter(team => team.country === c) : teams;
 
         },
 
-        league: (c = this.filters.country(), l = this.state.league) => {
+        league: (c = this.filters.country(), l = this.state.filters[1]) => {
 
             return l ? c.filter(team => team.league === l) : c;
 
         },
 
-        team: (l = this.filters.league(), t = this.state.team) => {
+        team: (l = this.filters.league(), t = this.state.filters[3]) => {
 
             return t ? l.filter(team => team.teamID === t) : l;
 
         },
 
-        display: (transfers = this.state.transfers, t = this.state.team, d = this.state.direction) => {
+        display: (transfers = this.state.transfers, t = this.state.filters[3], d = this.state.filters[4]) => {
 
             let results = []
 
@@ -127,27 +124,60 @@ class App extends Component {
         
         },
 
-        generateInfo: (t) => {
+        generateInfo: (t, teams = this.state.teams) => {
 
             let result;
+            let link = { in: null, out: null };
             let cost = t.type.replace(' ', '');
 
-            const name = t.name.includes('&apos;') ? t.name.replace('&apos;', "'") : t.name;
-            const type = t.type === 'Loan' ? 'loaned' : 'transferred';
+            const name      = t.name.includes('&apos;') ? t.name.replace('&apos;', "'") : t.name;
+            const type      = t.type === 'Loan' ? 'loaned' : 'transferred';
+
+            if (t.team.in.id) {
+
+                const ft    = teams.filter(team => team.teamID === t.team.in.id);
+                const l     = { 
+                    c: ft.length > 0 ? ft[0].country : null,
+                    l: ft.length > 0 ? ft[0].league : null,
+                    t: ft.length > 0 ? ft[0].name : null,
+                    i: ft.length > 0 ? ft[0].teamID : null, 
+                    d: ft.length > 0 ? 'in' : null
+                };
+
+                link.in = l;
+
+            }
+            
+            if (t.team.out.id) {
+
+                const ft    = teams.filter(team => team.teamID === t.team.out.id);
+                const l     = { 
+                    c: ft.length > 0 ? ft[0].country : null,
+                    l: ft.length > 0 ? ft[0].league : null, 
+                    t: ft.length > 0 ? ft[0].name : null,
+                    i: ft.length > 0 ? ft[0].teamID : null, 
+                    d: ft.length > 0 ? 'out' : null
+                };
+
+                link.out = l;
+
+            }
 
             t.type === 'Free' 
                 ? cost = ' for free.'
                 : t.type === 'Loan' ? cost = '.'
                 : t.type.charAt(0) !== '€' ? cost = ` for €${cost}.`
                 : cost = ` for ${cost}.`
-            
+
+            //
 
             result = {
 
                 name: name,
                 cost: cost,
                 type: type,
-                date: t.transferDate
+                date: t.transferDate,
+                link: link
 
             }
 
@@ -171,37 +201,69 @@ class App extends Component {
 
         },
 
+        count: (filter, transfers = this.state.transfers) => {
+
+            let c,l,t,r;
+
+            filter && filter.c ? c = this.filters.country(filter.c) : c = null;
+            filter && filter.l ? l = this.filters.league(c, filter.l) : l = null;
+            filter && filter.t ? t = this.filters.team(l, filter.t) : t = null;
+
+            return false;
+
+            if (c) {
+
+                if (l) {
+
+                    if (t) {
+
+                        if (filter && filter.d === 'in') {
+
+                            transfers.filter(p => p.team.in.id === t[0].teamID).map(p => r = r + 1)
+            
+                        } else if (filter && filter.d === 'out') {
+            
+                            transfers.filter(p => p.team.out.id === t[0].teamID).map(p => r = r + 1)
+            
+                        } else {
+            
+                            return r = null;
+            
+                        }
+
+                    }
+
+                }
+
+            }
+
+        },
+
         updateFilter: (filter) => {
 
             this.setState({
+
+                filters: [
+
+                    filter && filter.c ? filter.c : null,
+                    filter && filter.l ? filter.l : null,
+                    filter && filter.t ? filter.t : null,
+                    filter && filter.i ? filter.i : null,
+                    filter && filter.d ? filter.d : null,
+                    this.actions.count(filter),
+
+                ],
+
+                filtering:  true
     
-                country:    filter && filter.c ? filter.c : null,
-                league:     filter && filter.l ? filter.l : null,
-                team:       filter && filter.t ? filter.t : null,
-                direction:  filter && filter.d ? filter.d : null,
+            });
+
+            setTimeout(() => {
+
+                this.setState({ filtering: false })
+
+            }, 500)
     
-            })
-    
-        },
-
-        count: (filters, transfers = this.state.transfers) => {
-            
-            const { c, l } = filters;
-
-            const f1 = this.filters.country(c);
-            const f2 = this.filters.league(f1, l);
-
-            let count = 0;
-
-            //eslint-disable-next-line
-            f2.map(t => {
-
-                count = count + transfers.filter(p => p.team.in.id === t.teamID).length;
-
-            })
-
-            return count;
-
         }
 
     }
@@ -250,6 +312,7 @@ class App extends Component {
                 nav: leagues,
                 teams: teams,
                 transfers: transfers,
+                filters: [null, null, null, null, transfers.length],
                 lastUpdated: res3[0].date,
                 loading: false
             })

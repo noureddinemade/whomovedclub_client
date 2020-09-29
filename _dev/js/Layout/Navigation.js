@@ -8,12 +8,18 @@ import NavFilter from './NavFilter';
 
 const Navigation = props => {
 
-    const { nav, lastUpdated, country, league, updateFilter, count } = props;
-    const results = { c: country, l: league};
+    const { nav, lastUpdated, filters, updateFilter } = props;
 
-    let tag = country ? country.substr(0,3).toLowerCase() : 'all';
+    let c = filters[0];
+    let l = filters[1];
+    let t = filters[2];
+    let d = filters[4];
+    let r = filters[5];
 
-    const links = nav.map((t,i) => <NavFilter label={t} key={i} updateFilter={updateFilter} count={count} /> );
+    let tag     = c ? c.substr(0,3).toLowerCase() : 'all';
+    let count   = r;
+
+    const links = nav.map((t,i) => <NavFilter label={t} key={i} updateFilter={updateFilter} /> );
 
     return (
 
@@ -24,7 +30,7 @@ const Navigation = props => {
             <Dropdown>
 
                 <Dropdown.Toggle id="dropdown-basic" className={tag}>
-                    { league ? `${league} (${count(results)})` : 'All' }
+                    { l ? l : 'All' }{ t ? ` / ${t}`  : '' }
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>

@@ -1,20 +1,13 @@
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-const NavFilter = ({ updateFilter, count, label }) => {
+const NavFilter = ({ updateFilter, label }) => {
 
     const t         = label.split('/');
     const tag       = t[0].substr(0,3).toLowerCase();
     
-    const filters   = { 
-
-        c: t[0],
-        l: t[1],
-        t: null,
-        d: null
-        
-     }
-     const results = count(filters);
+    const filters   = { c: t[0], l: t[1] };
+    const results   = 1;
 
     return (
 
