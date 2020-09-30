@@ -1,9 +1,13 @@
 import React from 'react';
+
+import Loading from './Loading';
 import Player from './Layout/Player';
 
-const Transfers = ({ filter, filtering, generateInfo, updateFilter, teams }) => {
+//
 
-    const results = filter();
+const Transfers = ({ display, filtering, generateInfo, updateFilter, teams }) => {
+
+    const results = display();
 
     return (
 
@@ -15,7 +19,7 @@ const Transfers = ({ filter, filtering, generateInfo, updateFilter, teams }) => 
                     ? results.length > 0
                         ? results.map((t,i) => <Player key={i} t={t} generateInfo={generateInfo} updateFilter={updateFilter} teams={teams} /> )
                         : ''
-                    : <div>Loading...</div>
+                    : <Loading />
 
             }
 
@@ -24,5 +28,7 @@ const Transfers = ({ filter, filtering, generateInfo, updateFilter, teams }) => 
     )
 
 }
+
+//
 
 export default Transfers;

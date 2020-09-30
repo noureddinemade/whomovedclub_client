@@ -1,7 +1,9 @@
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-const NavFilter = ({ updateFilter, label }) => {
+//
+
+const League = ({ updateFilter, label }) => {
 
     const t         = label.split('/');
     const tag       = t[0].substr(0,3).toLowerCase();
@@ -22,4 +24,6 @@ const NavFilter = ({ updateFilter, label }) => {
 
 }
 
-export default NavFilter;
+//
+
+export default League;

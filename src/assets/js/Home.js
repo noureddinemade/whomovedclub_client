@@ -1,8 +1,6 @@
 import React from 'react';
 
-import Info from './Layout/Info';
-import Footer from './Layout/Footer';
-import Navigation from './Layout/Navigation';
+import Filters from './Layout/Filters';
 import Transfers from './Transfers';
 
 //
@@ -10,22 +8,14 @@ import Transfers from './Transfers';
 const Home = props => {
     
 
-    return (
+    return (     
 
-        <main>
+        <section className="content">
 
-            <Info reset={props.updateFilter}/>
+            <Filters {...props} />
+            <Transfers {...props} />
 
-            <section className="content">
-
-                <Navigation {...props} />
-                <Transfers {...props} />
-
-            </section>
-
-            <Footer />
-
-        </main>
+        </section>
 
     )
 

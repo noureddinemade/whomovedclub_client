@@ -2,11 +2,11 @@ import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Moment from 'react-moment';
 
-import NavFilter from './NavFilter';
+import League from './Filters/League';
 
 //
 
-const Navigation = props => {
+const Filters = props => {
 
     const { nav, lastUpdated, filters, updateFilter } = props;
 
@@ -19,7 +19,7 @@ const Navigation = props => {
     let tag     = c ? c.substr(0,3).toLowerCase() : 'all';
     let count   = r;
 
-    const links = nav.map((t,i) => <NavFilter label={t} key={i} updateFilter={updateFilter} /> );
+    const links = nav.map((t,i) => <League label={t} key={i} updateFilter={updateFilter} /> );
 
     return (
 
@@ -51,4 +51,4 @@ const Navigation = props => {
 
 //
 
-export default Navigation;
+export default Filters;

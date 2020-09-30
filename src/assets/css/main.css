@@ -437,7 +437,19 @@ div.transfers {
     transition-property: opacity, box-shadow;
     transition-duration: 0.1s, 0.1s;
     transition-delay: 0s;
-    transition-timing-function: linear; }
+    transition-timing-function: linear;
+    -webkit-animation-name: player;
+    -webkit-animation-duration: 0.2s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-delay: 0s;
+    -webkit-animation-fill-mode: none;
+    animation-name: player;
+    animation-duration: 0.2s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+    animation-delay: 0s;
+    animation-fill-mode: none; }
     @media screen and (max-width: 0) {
       div.transfers div.player, div.transfers p.notice {
         padding: 15px 15px; } }

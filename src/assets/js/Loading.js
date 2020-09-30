@@ -1,22 +1,14 @@
 import React from 'react';
 
-const Loading = ({ messages }) => {
-
-    const waiting = messages ? messages.map((m, i) => <p key={i}>{m}</p>) : null; 
+const Loading = () => {
 
     return (
 
-        <main>
+        <div className="loading">
 
-            <div className="loading">
+            <p>Loading</p>
 
-                <p>Loading</p>
-
-                { waiting }
-
-            </div>
-
-        </main>
+        </div>
 
     )
 

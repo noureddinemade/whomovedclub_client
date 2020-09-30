@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 
-import Home from './Home';
 import Loading from './Loading';
+import Home from './Home';
+import Info from './Layout/Info';
+import Footer from './Layout/Footer';
 
 //
 
@@ -19,8 +21,7 @@ class App extends Component {
             lastUpdated: '',
             filters: [],
             filtering: false,
-            loading: true,
-            loadingMessages: []
+            loading: true
 
         };
         
@@ -185,22 +186,6 @@ class App extends Component {
 
         },
 
-        imWaiting: (count) => {
-
-            const messages = ['Almost there','Just one more thing','Hold on please']
-
-            if (this.state.loading) {
-
-                this.setState(prevState => ({
-
-                    loadingMessages: [...prevState.loadingMessages, messages[count]]
-    
-                }))
-
-            }
-
-        },
-
         count: (filter, transfers = this.state.transfers) => {
 
             let c,l,t,r;
@@ -339,9 +324,21 @@ class App extends Component {
 
         return (
 
-            !this.state.loading
-                ? <Home {...this.actions} {...this.state} filter={this.filters.display} />
-                : <Loading messages={this.state.loadingMessages} />
+            <main>
+
+                <Info reset={this.actions.updateFilter} />
+
+                {
+                    
+                    !this.state.loading
+                        ? <Home {...this.actions} {...this.state} display={this.filters.display} />
+                        : <section className="content"> <Loading /> </section>
+
+                }
+
+                <Footer />
+
+            </main>
                     
 
         )
