@@ -8,7 +8,7 @@ import League from './Filters/League';
 
 const Filters = props => {
 
-    const { nav, lastUpdated, filters, updateFilter } = props;
+    const { nav, lastUpdated, filters, updateFilter, count } = props;
 
     let c = filters[0];
     let l = filters[1];
@@ -17,9 +17,8 @@ const Filters = props => {
     let r = filters[5];
 
     let tag     = c ? c.substr(0,3).toLowerCase() : 'all';
-    let count   = r;
 
-    const links = nav.map((t,i) => <League label={t} key={i} updateFilter={updateFilter} /> );
+    const links = nav.map((t,i) => <League label={t} key={i} updateFilter={updateFilter} count={count} /> );
 
     return (
 
@@ -30,7 +29,7 @@ const Filters = props => {
             <Dropdown>
 
                 <Dropdown.Toggle id="dropdown-basic" className={tag}>
-                    { l ? l : 'All' }{ t ? ` / ${t}`  : '' }
+                    { l ? l : 'All' }{ t ? ` / ${t}`  : '' } (<span className={d}>{r}</span>)
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>

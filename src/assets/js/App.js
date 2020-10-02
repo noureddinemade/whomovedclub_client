@@ -188,13 +188,12 @@ class App extends Component {
 
         count: (filter, transfers = this.state.transfers) => {
 
-            let c,l,t,r;
+            let c,l,t;
+            let r = 0;
 
             filter && filter.c ? c = this.filters.country(filter.c) : c = null;
             filter && filter.l ? l = this.filters.league(c, filter.l) : l = null;
-            filter && filter.t ? t = this.filters.team(l, filter.t) : t = null;
-
-            return false;
+            filter && filter.i ? t = this.filters.team(l, filter.i) : t = null;
 
             if (c) {
 
@@ -206,21 +205,33 @@ class App extends Component {
 
                             transfers.filter(p => p.team.in.id === t[0].teamID).map(p => r = r + 1)
             
-                        } else if (filter && filter.d === 'out') {
-            
+                        }
+                        
+                        if (filter && filter.d === 'out') {
+
                             transfers.filter(p => p.team.out.id === t[0].teamID).map(p => r = r + 1)
-            
-                        } else {
-            
-                            return r = null;
             
                         }
 
+                    } else {
+
+                        l.map(team => transfers.filter(p => p.team.in.id === team.teamID).map(p => r = r + 1))
+    
                     }
+
+                } else {
+
+                    c.map(team => transfers.filter(p => p.team.in.id === team.teamID).map(p => r = r + 1))
 
                 }
 
+            } else {
+
+                r = transfers.length;
+
             }
+
+            return r;
 
         },
 
@@ -256,7 +267,6 @@ class App extends Component {
     //
 
     async getData () {
-
         let transfers   = [];
         let teams       = [];
 
@@ -286,21 +296,21 @@ class App extends Component {
 
             });
 
-            // eslint-disable-next-line
-            await res2.map( p => {
-
-                transfers.push(p);
-            
-            });
+            await res2.map( p => transfers.push(p) );
 
             this.setState({
                 nav: leagues,
                 teams: teams,
                 transfers: transfers,
-                filters: [null, null, null, null, transfers.length],
                 lastUpdated: res3[0].date,
                 loading: false
             })
+
+            //
+
+            const filters = [null,null,null,null,'in',transfers.length]
+
+            this.actions.updateFilter(filters)
 
         } catch(error) {
 
@@ -326,7 +336,7 @@ class App extends Component {
 
             <main>
 
-                <Info reset={this.actions.updateFilter} />
+                <Info reset={this.actions.updateFilter} loading={this.state.loading} filtering={this.state.filtering} />
 
                 {
                     

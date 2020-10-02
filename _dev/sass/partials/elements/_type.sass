@@ -27,6 +27,28 @@ p
 
     // Classes
 
+    &.loading
+
+        margin-bottom: $globalSpace
+
+        // Psuedo
+
+        &:before
+
+            content: '🕛'
+
+            padding-right: 10px
+
+            font-size: $fontBase - 4px
+
+            +animation(loadingTime, 1s, linear, infinite)
+
+        &:after
+
+            content: '...'
+
+            +animation(loadingDots, 1s, linear, infinite)
+
     &.status
 
         position: relative

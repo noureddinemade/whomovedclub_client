@@ -3,13 +3,13 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 //
 
-const League = ({ updateFilter, label }) => {
+const League = ({ updateFilter, count, label }) => {
 
     const t         = label.split('/');
     const tag       = t[0].substr(0,3).toLowerCase();
     
-    const filters   = { c: t[0], l: t[1] };
-    const results   = 1;
+    const filters   = { c: t[0], l: t[1], d:'in' };
+    const results   = count(filters);
 
     return (
 

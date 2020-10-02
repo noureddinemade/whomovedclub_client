@@ -85,6 +85,42 @@ h1 {
 
 p {
   line-height: 1.3; }
+  p.loading {
+    margin-bottom: 50px; }
+    p.loading:before {
+      content: '🕛';
+      padding-right: 10px;
+      font-size: 16px;
+      -webkit-animation-name: loadingTime;
+      -webkit-animation-duration: 1s;
+      -webkit-animation-timing-function: linear;
+      -webkit-animation-iteration-count: infinite;
+      -webkit-animation-delay: 0s;
+      -webkit-animation-fill-mode: none;
+      -webkit-animation-play-state: running;
+      animation-name: loadingTime;
+      animation-duration: 1s;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      animation-delay: 0s;
+      animation-fill-mode: none;
+      animation-play-state: running; }
+    p.loading:after {
+      content: '...';
+      -webkit-animation-name: loadingDots;
+      -webkit-animation-duration: 1s;
+      -webkit-animation-timing-function: linear;
+      -webkit-animation-iteration-count: infinite;
+      -webkit-animation-delay: 0s;
+      -webkit-animation-fill-mode: none;
+      -webkit-animation-play-state: running;
+      animation-name: loadingDots;
+      animation-duration: 1s;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      animation-delay: 0s;
+      animation-fill-mode: none;
+      animation-play-state: running; }
   p.status {
     position: relative;
     margin: 25px 0;
@@ -272,26 +308,6 @@ p.status, div.transfers div.player span.name, div.transfers p.notice span.name {
     -ms-transform: rotate(-360deg);
     transform: rotate(-360deg); } }
 
-@keyframes logoRes {
-  0% {
-    -webkit-transform: rotate(0deg) translateY(-70%);
-    -ms-transform: rotate(0deg) translateY(-70%);
-    transform: rotate(0deg) translateY(-70%); }
-  100% {
-    -webkit-transform: rotate(-360deg) translateY(-70%);
-    -ms-transform: rotate(-360deg) translateY(-70%);
-    transform: rotate(-360deg) translateY(-70%); } }
-
-@-webkit-keyframes logoRes {
-  0% {
-    -webkit-transform: rotate(0deg) translateY(-70%);
-    -ms-transform: rotate(0deg) translateY(-70%);
-    transform: rotate(0deg) translateY(-70%); }
-  100% {
-    -webkit-transform: rotate(-360deg) translateY(-70%);
-    -ms-transform: rotate(-360deg) translateY(-70%);
-    transform: rotate(-360deg) translateY(-70%); } }
-
 p.status:before, div.transfers div.player:before, div.transfers p.notice:before, nav div.dropdown:before {
   font-family: "Material Icons";
   font-weight: normal;
@@ -305,42 +321,6 @@ p.status:before, div.transfers div.player:before, div.transfers p.notice:before,
   direction: ltr;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
-
-div.loading {
-  position: fixed;
-  z-index: 100;
-  width: 100%;
-  height: 100%; }
-  div.loading p:before {
-    content: '🕛';
-    padding-right: 10px;
-    font-size: 16px;
-    -webkit-animation-name: loadingTime;
-    -webkit-animation-duration: 1s;
-    -webkit-animation-timing-function: linear;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-delay: 0s;
-    -webkit-animation-fill-mode: none;
-    animation-name: loadingTime;
-    animation-duration: 1s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-delay: 0s;
-    animation-fill-mode: none; }
-  div.loading p:after {
-    content: '...';
-    -webkit-animation-name: loadingDots;
-    -webkit-animation-duration: 1s;
-    -webkit-animation-timing-function: linear;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-delay: 0s;
-    -webkit-animation-fill-mode: none;
-    animation-name: loadingDots;
-    animation-duration: 1s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-delay: 0s;
-    animation-fill-mode: none; }
 
 body {
   display: block;
@@ -407,20 +387,25 @@ section.info {
   section.info img.logo {
     width: 80%;
     -webkit-animation-name: logo;
-    -webkit-animation-duration: 30s;
+    -webkit-animation-duration: 20s;
     -webkit-animation-timing-function: linear;
     -webkit-animation-iteration-count: infinite;
     -webkit-animation-delay: 0s;
     -webkit-animation-fill-mode: none;
+    -webkit-animation-play-state: paused;
     animation-name: logo;
-    animation-duration: 30s;
+    animation-duration: 20s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     animation-delay: 0s;
-    animation-fill-mode: none; }
+    animation-fill-mode: none;
+    animation-play-state: paused; }
     @media screen and (max-width: 1280px) {
       section.info img.logo {
         width: 100px; } }
+    section.info img.logo.loading {
+      -webkit-animation-play-state: running;
+      animation-play-state: running; }
 
 div.transfers {
   display: flex;
@@ -444,12 +429,14 @@ div.transfers {
     -webkit-animation-iteration-count: 1;
     -webkit-animation-delay: 0s;
     -webkit-animation-fill-mode: none;
+    -webkit-animation-play-state: running;
     animation-name: player;
     animation-duration: 0.2s;
     animation-timing-function: linear;
     animation-iteration-count: 1;
     animation-delay: 0s;
-    animation-fill-mode: none; }
+    animation-fill-mode: none;
+    animation-play-state: running; }
     @media screen and (max-width: 0) {
       div.transfers div.player, div.transfers p.notice {
         padding: 15px 15px; } }
@@ -536,6 +523,10 @@ nav {
       transform: translateY(-50%); }
     nav div.dropdown.show:before {
       content: 'keyboard_arrow_up'; }
+    nav div.dropdown span.in {
+      color: #03B37B; }
+    nav div.dropdown span.out {
+      color: #FF1F4E; }
     nav div.dropdown div.dropdown-menu, nav div.dropdown button {
       width: 100%; }
     nav div.dropdown button {
@@ -582,12 +573,14 @@ nav {
       -webkit-animation-iteration-count: infinite;
       -webkit-animation-delay: 0s;
       -webkit-animation-fill-mode: none;
+      -webkit-animation-play-state: running;
       animation-name: globe;
       animation-duration: 1s;
       animation-timing-function: linear;
       animation-iteration-count: infinite;
       animation-delay: 0s;
-      animation-fill-mode: none; }
+      animation-fill-mode: none;
+      animation-play-state: running; }
     nav div.dropdown button.eng:before, nav div.dropdown div.dropdown-menu a.eng:before {
       content: '🏴󠁧󠁢󠁥󠁮󠁧󠁿'; }
     nav div.dropdown button.spa:before, nav div.dropdown div.dropdown-menu a.spa:before {

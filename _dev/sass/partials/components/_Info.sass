@@ -25,10 +25,17 @@ section.info
 
         width: 80%
 
-        +animation(logo, 30s, linear, infinite)
+        +animation(logo, 20s, linear, infinite, $play: paused)
 
         // Responsive
 
         +screen($sXL)
 
             width: 100px
+
+        // Classes       
+
+        &.loading
+
+            -webkit-animation-play-state: running
+            animation-play-state: running
