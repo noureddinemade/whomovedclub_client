@@ -166,6 +166,7 @@ class App extends Component {
 
             t.type === 'Free' 
                 ? cost = ' for free.'
+                : t.type === 'free' ? cost = ' for free.'
                 : t.type === 'Loan' ? cost = '.'
                 : t.type.charAt(0) !== '€' ? cost = ` for €${cost}.`
                 : cost = ` for ${cost}.`
