@@ -128,11 +128,12 @@ class App extends Component {
         generateInfo: (t, teams = this.state.teams) => {
 
             let result;
-            let link = { in: null, out: null };
-            let cost = t.type.replace(' ', '');
+            let link        = { in: null, out: null };
+            let cost        = t.type;
+            let currency    = cost ? cost.slice(-1).toUpperCase() : null;
 
             const name      = t.name.includes('&apos;') ? t.name.replace('&apos;', "'") : t.name;
-            const type      = t.type === 'Loan' ? 'loaned' : 'transferred';
+            const type      = t.type === 'loan' ? 'loaned' : 'transferred';
 
             if (t.team.in.id) {
 
@@ -164,12 +165,11 @@ class App extends Component {
 
             }
 
-            t.type === 'Free' 
-                ? cost = ' for free.'
-                : t.type === 'free' ? cost = ' for free.'
-                : t.type === 'Loan' ? cost = '.'
-                : t.type.charAt(0) !== '€' ? cost = ` for €${cost}.`
-                : cost = ` for ${cost}.`
+            !t.type
+                ? cost = '.'
+                : t.type && t.type === 'free' ? cost = ' for free.'
+                : t.type && t.type === 'loan' ? cost = '.'
+                : cost = ` for €${cost.slice(0, -1)}${currency}.`
 
             //
 
