@@ -3,12 +3,13 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 //
 
-const League = ({ updateFilter, count, label }) => {
+const League = ({ updateFilter, count, country, league, tag }) => {
 
-    const t         = label.split('/');
-    const tag       = t[0].substr(0,3).toLowerCase();
+    const c     = country;
+    const l     = league;
+    // const tag   = tag;
     
-    const filters   = { c: t[0], l: t[1], d:'in' };
+    const filters   = { c: c, l: l, d:'in' };
     const results   = count(filters);
 
     return (
@@ -17,7 +18,7 @@ const League = ({ updateFilter, count, label }) => {
             className={`${tag} ${results === 0 ? 'disabled' : ''}`} 
             onClick={ (e) => results > 0 ?  updateFilter(filters) : null }
         >
-            { t[1] } ({ results })
+            { l } ({ results })
         </Dropdown.Item>
 
     )

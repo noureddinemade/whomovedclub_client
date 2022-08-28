@@ -5,8 +5,8 @@ import TeamLogos from './TeamLogos';
 const Player = ({ t, generateInfo, updateFilter, teams }) => {
 
     const transfer  = generateInfo(t);
-    const teamIn    = transfer.link.in.t ? <button onClick={() => updateFilter(transfer.link.in) } className="in">{ t.team.in.name }</button> : t.team.in.name;
-    const teamOut   = transfer.link.out.t ? <button onClick={() => updateFilter(transfer.link.out) } className="out">{ t.team.out.name }</button> : t.team.out.name;
+    const teamIn    = transfer.link.in.t ? <button onClick={() => updateFilter(transfer.link.in) } className="in">{ t.in }</button> : t.in;
+    const teamOut   = transfer.link.out.t ? <button onClick={() => updateFilter(transfer.link.out) } className="out">{ t.out }</button> : t.out;
 
     return (
 

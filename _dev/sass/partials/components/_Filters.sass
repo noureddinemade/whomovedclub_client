@@ -7,7 +7,7 @@ nav
     display: block
     position: relative
 
-    margin-bottom: $globalSpace / 2
+    margin-bottom: calc($globalSpace / 2)
 
     background-color: $bg
 
@@ -31,7 +31,7 @@ nav
             position: absolute
 
             top: 50%
-            right: $globalSpace / 2
+            right: calc($globalSpace / 2)
 
             font-size: $fontBase * 2
 
@@ -72,7 +72,7 @@ nav
 
             height: 60px
 
-            padding: 0 $globalSpace / 2
+            padding: 0 calc($globalSpace / 2)
 
             font-family: $fontMain
             font-size: $fontBase
@@ -100,7 +100,7 @@ nav
 
         div.dropdown-menu
 
-            padding: $globalSpace / 4 0
+            padding: calc($globalSpace / 4) 0
 
             background-color: $light
             border: 2px solid $dark
@@ -113,7 +113,7 @@ nav
 
                 width: 100%
                 
-                padding: 10px $globalSpace / 2
+                padding: 10px calc($globalSpace / 2)
 
                 color: $dark !important
 
@@ -175,7 +175,7 @@ nav
 
                 content: '🇫🇷'
             
-            &.ame:before
+            &.usa:before
 
                 content: '🇺🇸🇨🇦'
             
@@ -198,3 +198,20 @@ nav
             &.sco:before
 
                 content: '🏴󠁧󠁢󠁳󠁣󠁴󠁿'
+
+            &.arg:before
+
+                content: '🇦🇷'
+
+            &.jap:before
+
+                content: '🇯🇵'
+
+            &.aus:before
+
+                content: '🇦🇺🇳🇿'
+
+            &.tur:before
+
+                content: '🇹🇷'
+            

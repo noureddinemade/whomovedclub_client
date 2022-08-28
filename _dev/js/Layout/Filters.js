@@ -8,7 +8,7 @@ import League from './Filters/League';
 
 const Filters = props => {
 
-    const { nav, lastUpdated, filters, updateFilter, count } = props;
+    const { nav, countries, leagues, lastUpdated, filters, updateFilter, count } = props;
 
     let c = filters[0];
     let l = filters[1];
@@ -16,9 +16,21 @@ const Filters = props => {
     let d = filters[4];
     let r = filters[5];
 
-    let tag     = c ? c.substr(0,3).toLowerCase() : 'all';
+    let navLeagues = [];
 
-    const links = nav.map((t,i) => <League label={t} key={i} updateFilter={updateFilter} count={count} /> );
+    let tag = c ? c.substr(0,3).toLowerCase() : 'all';
+
+    const links = navLeagues.map((l,i) => {
+
+        return (
+
+            <p key={i}>test</p>
+
+            // <League label={t} key={i} updateFilter={updateFilter} count={count} />
+
+        )
+
+    })
 
     return (
 

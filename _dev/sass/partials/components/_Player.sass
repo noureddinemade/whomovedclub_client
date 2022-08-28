@@ -7,12 +7,12 @@ div.player
     align-items: center
     justify-content: space-between
 
-    margin-bottom: $globalSpace / 4
+    margin-bottom: calc($globalSpace / 4)
 
     border: 2px solid $dark
     box-shadow: 0px 0px 0 $primary
 
-    +padding($globalSpace / 2)
+    +padding(calc($globalSpace / 2))
     +transition((opacity, box-shadow), (.1s, .1s))
     +animation(player, .2s, $loop: 1)
 

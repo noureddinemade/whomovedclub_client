@@ -16,6 +16,8 @@ class App extends Component {
         this.state = {
 
             nav: [],
+            countries: [],
+            leagues: [],
             teams: [],
             transfers: [],
             lastUpdated: '',
@@ -45,7 +47,7 @@ class App extends Component {
 
         team: (l = this.filters.league(), t = this.state.filters[3]) => {
 
-            return t ? l.filter(team => team.teamID === t) : l;
+            return t ? l.filter(team => team.name === t) : l;
 
         },
 
@@ -63,7 +65,7 @@ class App extends Component {
                     if (d === 'in') {
 
                         // eslint-disable-next-line
-                        transfers.filter(p => p.team.in.id === t.teamID).map(p => {
+                        transfers.filter(p => p.in === t.name).map(p => {
 
                             results.push(p);
     
@@ -74,7 +76,7 @@ class App extends Component {
                     else if (d === 'out') {
 
                         // eslint-disable-next-line
-                        transfers.filter(p => p.team.out.id === t.teamID).map(p => {
+                        transfers.filter(p => p.out === t.name).map(p => {
 
                             results.push(p);
     
@@ -94,7 +96,7 @@ class App extends Component {
                 filter.map(t => {
 
                     // eslint-disable-next-line
-                    transfers.filter(p => p.team.in.id === t.teamID).map(p => {
+                    transfers.filter(p => p.in === t.name).map(p => {
 
                         results.push(p);
 
@@ -105,7 +107,7 @@ class App extends Component {
             }
 
 
-            return results.sort((a,b) => new Date(b.transferDate) - new Date(a.transferDate));
+            return results.sort((a,b) => new Date(b.date) - new Date(a.date));
 
         }
 
@@ -135,14 +137,13 @@ class App extends Component {
             const name      = t.name.includes('&apos;') ? t.name.replace('&apos;', "'") : t.name;
             const type      = t.type === 'loan' ? 'loaned' : 'transferred';
 
-            if (t.team.in.id) {
+            if (t.in) {
 
-                const ft    = teams.filter(team => team.teamID === t.team.in.id);
+                const ft    = teams.filter(team => team.name === t.in);
                 const l     = { 
                     c: ft.length > 0 ? ft[0].country : null,
                     l: ft.length > 0 ? ft[0].league : null,
                     t: ft.length > 0 ? ft[0].name : null,
-                    i: ft.length > 0 ? ft[0].teamID : null, 
                     d: ft.length > 0 ? 'in' : null
                 };
 
@@ -150,14 +151,13 @@ class App extends Component {
 
             }
             
-            if (t.team.out.id) {
+            if (t.out) {
 
-                const ft    = teams.filter(team => team.teamID === t.team.out.id);
+                const ft    = teams.filter(team => team.name === t.out);
                 const l     = { 
                     c: ft.length > 0 ? ft[0].country : null,
                     l: ft.length > 0 ? ft[0].league : null, 
                     t: ft.length > 0 ? ft[0].name : null,
-                    i: ft.length > 0 ? ft[0].teamID : null, 
                     d: ft.length > 0 ? 'out' : null
                 };
 
@@ -178,7 +178,7 @@ class App extends Component {
                 name: name,
                 cost: cost,
                 type: type,
-                date: t.transferDate,
+                date: t.date,
                 link: link
 
             }
@@ -204,25 +204,25 @@ class App extends Component {
 
                         if (filter && filter.d === 'in') {
 
-                            transfers.filter(p => p.team.in.id === t[0].teamID).map(p => r = r + 1)
+                            transfers.filter(p => p.in === t[0].name).map(p => r = r + 1)
             
                         }
                         
                         if (filter && filter.d === 'out') {
 
-                            transfers.filter(p => p.team.out.id === t[0].teamID).map(p => r = r + 1)
+                            transfers.filter(p => p.out === t[0].name).map(p => r = r + 1)
             
                         }
 
                     } else {
 
-                        l.map(team => transfers.filter(p => p.team.in.id === team.teamID).map(p => r = r + 1))
+                        l.map(team => transfers.filter(p => p.in === team.name).map(p => r = r + 1))
     
                     }
 
                 } else {
 
-                    c.map(team => transfers.filter(p => p.team.in.id === team.teamID).map(p => r = r + 1))
+                    c.map(team => transfers.filter(p => p.in === team.name).map(p => r = r + 1))
 
                 }
 
@@ -273,25 +273,27 @@ class App extends Component {
 
         try {
 
-            const dateURL           = await fetch('https://whomovedclub.herokuapp.com/date');
-            const teamsURL          = await fetch('https://whomovedclub.herokuapp.com/teams');
-            const transfersURL      = await fetch('https://whomovedclub.herokuapp.com/transfers');
+            const dateURL           = await fetch('http://api.whomoved.club/date');
+            const teamsURL          = await fetch('http://api.whomoved.club/teams');
+            const transfersURL      = await fetch('http://api.whomoved.club/transfers');
 
             let res1 = await teamsURL.json();
             let res2 = await transfersURL.json();
             let res3 = await dateURL.json();
             
-            let leagues = [];
+            let countries   = [];
+            let leagues     = [];
 
-            res2 = await res2.sort((a,b) => new Date(b.transferDate) - new Date(a.transferDate));
+            res2 = await res2.sort((a,b) => new Date(b.date) - new Date(a.date));
             
             // eslint-disable-next-line
             await res1.map( t => {
 
-                const s = `${t.country}/${t.league}` 
-                const l = this.actions.isDuplicate(s, leagues);
+                const c = this.actions.isDuplicate(t.country, countries);
+                const l = this.actions.isDuplicate(t.league, leagues);
 
-                if (!l) leagues.push(s);
+                if (!c) countries.push(t.country);
+                if (!l) leagues.push(t.league);
 
                 teams.push(t);
 
@@ -301,6 +303,8 @@ class App extends Component {
 
             this.setState({
                 nav: leagues,
+                countries: countries,
+                leagues: leagues,
                 teams: teams,
                 transfers: transfers,
                 lastUpdated: res3[0].date,
