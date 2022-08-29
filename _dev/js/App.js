@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Loading from './Loading';
-import Info from './Layout/Info';
+import Header from './Layout/Header';
 import Footer from './Layout/Footer';
 
 // This is me testing something
@@ -91,7 +91,7 @@ class App extends Component {
             transfersResult.map(t => {
 
                 let name = this.actions.isDuplicate(t.name, transfers);
-                let team = this.actions.isDuplicate(t.team, transfers);
+                let team = this.actions.isDuplicate(t.in, transfers);
                 let type = this.actions.isDuplicate(t.type, transfers);
                 let date = this.actions.isDuplicate(t.date, transfers);
 
@@ -106,9 +106,7 @@ class App extends Component {
                 teams: teams,
                 transfers: transfers,
                 lastUpdated: dateResult[0].date,
-                filters: [],
-                filtering: false,
-                loading: true
+                loading: false
 
             })
 
@@ -129,8 +127,6 @@ class App extends Component {
 
     }
 
-    // ? <Home {...this.actions} {...this.state} display={this.filters.display} />
-
     //
 
     render() {
@@ -139,12 +135,12 @@ class App extends Component {
 
             <main>
 
-                <Info reset={this.actions.updateFilter} loading={this.state.loading} filtering={this.state.filtering} />
+                <Header {...this.actions} {...this.state} />
 
                 {
                     
                     !this.state.loading
-                        ? <p>Loaded</p>
+                        ? this.state.transfers.map((t,i) => <p key={i}>{t.name},</p> )
                         : <section className="content"> <Loading /> </section>
 
                 }

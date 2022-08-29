@@ -1,17 +1,27 @@
 // Info
 
-section.info
+header
 
     position: sticky
     position: -webkit-sticky
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    align-items: center
     z-index: 2
 
     top: 0
 
-    width: 20%
-    height: 50%
+    width: 100%
+    height: auto
 
     margin-bottom: calc($globalSpace / 2)
+
+    background-color: $bg
+
+    @extend %padding
+    
+    // Responsive
 
     +screen($sXL)
 
@@ -23,17 +33,11 @@ section.info
 
     img.logo
 
-        width: 80%
+        height: 80px
 
         +animation(logo, 20s, linear, infinite, $play: paused)
 
-        // Responsive
-
-        +screen($sXL)
-
-            width: 100px
-
-        // Classes       
+        // Classes     
 
         &.loading
 

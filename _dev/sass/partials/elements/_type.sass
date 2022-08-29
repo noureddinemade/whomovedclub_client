@@ -49,43 +49,6 @@ p
 
             +animation(loadingDots, 1s, linear, infinite)
 
-    &.status
-
-        position: relative
-
-        margin: calc($globalSpace / 2) 0
-        padding-left: 40px
-
-        font-size: $fontBase + 4px
-
-        @extend %textUpper
-
-        // Psuedo
-
-        &:before
-
-            position: absolute
-
-            left: 0
-
-            font-size: $fontBase + 10px
-
-            +transform(translateY, -5px)
-
-            @extend %icon
-
-    &.in:before
-
-        content: 'flight_land'
-
-        color: $primary
-
-    &.out:before
-
-        content: 'flight_takeoff'
-
-        color: $tertiary
-
     &.notice
 
         border-color: rgba($dark, .2) !important

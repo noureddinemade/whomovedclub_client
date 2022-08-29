@@ -1,20 +1,24 @@
 import React from 'react';
 import logo from '../../img/logo.svg';
 
-const Info = ({ reset, loading, filtering }) => {
+const Header = props => {
+
+    const { reset, loading, filtering } = props
 
     return (
 
-        <section className="info">
+        <header>
 
             <h1 onClick={ () => reset() }>
                 <img src={logo} alt="" className={`logo ${!loading && !filtering ? '' : 'loading'}`}/>
             </h1>
 
-        </section>
+            <p>FILTERS</p>
+
+        </header>
 
     )
 
 };
 
-export default Info;
+export default Header;

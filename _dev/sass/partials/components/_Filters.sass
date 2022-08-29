@@ -22,31 +22,6 @@ nav
 
         font-size: $fontBase - 4px
 
-        // Pseudo
-            
-        &:before
-
-            content: 'keyboard_arrow_down'
-
-            position: absolute
-
-            top: 50%
-            right: calc($globalSpace / 2)
-
-            font-size: $fontBase * 2
-
-            color: $primary
-
-            +transform(translateY, -50%)
-
-            @extend %icon
-
-        // Classes
-        
-        &.show:before
-
-            content: 'keyboard_arrow_up'
-
         // Children
 
         span
