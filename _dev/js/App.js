@@ -68,18 +68,56 @@ class App extends Component {
 
             let teamsResult         = await teamsURL.json();
             let transfersResult     = await transfersURL.json();
-            let dateResults         = await dateURL.json();
+            let dateResult          = await dateURL.json();
 
             transfersResult = await transfersResult.sort((a,b) => new Date(b.date) - new Date(a.date));
 
-            // Get countries
+            // Get countries, leagues & teams
             // eslint-disable-next-line array-callback-return
             teamsResult.map(t => {
 
-                let duplicate = this.actions.isDuplicate(t.country, countries);
+                let cDuplicate = this.actions.isDuplicate(t.country, countries);
+                let lDuplicate = this.actions.isDuplicate(t.league, leagues);
+                let tDuplicate = this.actions.isDuplicate(t.name, teams);
 
-                if (!duplicate) countries.push(t.country);
+                if (!cDuplicate) countries.push(t.country);
+                if (!lDuplicate) leagues.push(t.league);
+                if (!tDuplicate) teams.push(t.name);
                 
+            });
+
+            // Get transfers
+            // eslint-disable-next-line array-callback-return
+            transfersResult.map(t => {
+
+                let name = this.actions.isDuplicate(t.name, transfers);
+                let team = this.actions.isDuplicate(t.team, transfers);
+                let type = this.actions.isDuplicate(t.type, transfers);
+                let date = this.actions.isDuplicate(t.date, transfers);
+
+                if (!name && !team && !type && !date) transfers.push(t);
+                
+            });
+
+            // Get last updated
+            // eslint-disable-next-line array-callback-return
+            dateResult.map(t => {
+
+                
+                
+            });
+
+            this.setState({
+
+                countries: countries,
+                leagues: leagues,
+                teams: teams,
+                transfers: transfers,
+                lastUpdated: '',
+                filters: [],
+                filtering: false,
+                loading: true
+
             })
 
 
