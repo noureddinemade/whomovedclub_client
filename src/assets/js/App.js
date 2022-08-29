@@ -37,7 +37,17 @@ class App extends Component {
 
     actions = {
 
+        isDuplicate: (current, list) => {
+
+            const result = list.filter(a => a === current);
         
+            if (result.length > 0) {
+        
+                return true;
+        
+            }
+        
+        }
 
     }
 
@@ -64,9 +74,11 @@ class App extends Component {
 
             // Get countries
             // eslint-disable-next-line array-callback-return
-            teamsResult.map(() => {
+            teamsResult.map(t => {
 
+                let duplicate = this.actions.isDuplicate(t.country, countries);
 
+                if (!duplicate) countries.push(t.country);
                 
             })
 
