@@ -99,21 +99,13 @@ class App extends Component {
                 
             });
 
-            // Get last updated
-            // eslint-disable-next-line array-callback-return
-            dateResult.map(t => {
-
-                
-                
-            });
-
             this.setState({
 
                 countries: countries,
                 leagues: leagues,
                 teams: teams,
                 transfers: transfers,
-                lastUpdated: '',
+                lastUpdated: dateResult[0].date,
                 filters: [],
                 filtering: false,
                 loading: true
