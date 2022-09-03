@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
-import Loading from './Loading';
-import Header from './Layout/Header';
-import Footer from './Layout/Footer';
+import Loading  from './Loading';
+import Home     from './Home';
+import Header   from './Layout/Header';
+import Footer   from './Layout/Footer';
 
 // This is me testing something
 
@@ -140,7 +141,7 @@ class App extends Component {
                 {
                     
                     !this.state.loading
-                        ? this.state.transfers.map((t,i) => <p key={i}>{t.name},</p> )
+                        ? <Home />
                         : <section className="content"> <Loading /> </section>
 
                 }

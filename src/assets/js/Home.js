@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Filters from './Layout/Filters';
 import Transfers from './Transfers';
 
 //
@@ -12,7 +11,6 @@ const Home = props => {
 
         <section className="content">
 
-            <Filters {...props} />
             <Transfers {...props} />
 
         </section>
