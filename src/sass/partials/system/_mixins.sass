@@ -1,0 +1,130 @@
+// Mixins
+
+// Grid
+
+@mixin grid($columns, $gap)
+
+    display: grid
+    grid-template-columns: repeat($columns, minmax(0, 1fr))
+    grid-gap: $gap
+
+// Media Query
+
+@mixin screen($size)
+
+    @media screen and (max-width: $size)
+
+        @content
+
+// Responsive Padding
+
+@mixin padding($y, $x: $y, $z: 10px, $breaks: 0)
+
+    padding: $y $x
+
+    @each $label, $break in $breaks
+
+        +screen($break)
+
+            @if $y == 0
+                $y: 0
+            @else
+                $y: $y - $z
+
+            @if $x == 0
+                $x: 0
+            @else
+                $x: $x - $z
+
+            padding: $y $x
+
+// Adjust Max Width
+
+@mixin maxWidth($width)
+
+    width: 100%
+    max-width: $width
+
+// Transform
+
+@mixin transform($transformlist, $valuelist)
+
+    $transforms: ()
+
+    @each $transform in $transformlist
+
+        $i: index($transformlist, $transform)
+        $a: nth($valuelist, $i)
+        $type: $transform
+        $value: unquote('(#{$a})')
+        $data: #{$type}#{$value}
+        $transforms: append($transforms,$data)
+
+    -webkit-transform: $transforms
+    -ms-transform: $transforms
+    transform: $transforms
+
+// Animation
+
+@mixin animation($anim, $speed: 1s, $easing: linear, $loop: infinite, $delay: 0s, $fill: none, $state: running)
+
+    -webkit-animation-name: $anim
+    -webkit-animation-duration: $speed
+    -webkit-animation-timing-function: $easing
+    -webkit-animation-iteration-count: $loop
+    -webkit-animation-delay: $delay
+    -webkit-animation-fill-mode: $fill
+    -webkit-animation-play-state: $state
+
+    animation-name: $anim
+    animation-duration: $speed
+    animation-timing-function: $easing
+    animation-iteration-count: $loop
+    animation-delay: $delay
+    animation-fill-mode: $fill
+    animation-play-state: $state
+
+// Transition
+
+@mixin transition($transitions, $durations, $delays: 0s, $easings: linear)
+
+    transition-property: $transitions
+    transition-duration: $durations
+    transition-delay: $delays
+    transition-timing-function: $easings
+
+// Keyframes
+
+@mixin keyframes($name)
+
+    @-webkit-keyframes #{$name}
+
+        @content
+
+    @keyframes #{$name}
+
+        @content
+
+// Filters
+
+@mixin filter($filterlist, $valuelist)
+
+    $filters: ()
+
+    @each $filter in $filterlist
+
+        $i: index($filterlist, $filter)
+        $a: nth($valuelist, $i)
+        $type: $filter
+        $value: unquote('(#{$a})')
+        $data: $type#{$value}
+        $filters: append($filters, $data)
+
+    webkit-filter: $filters
+    filter: $filters
+
+// Border radius
+
+@mixin borderRadius($tl: 0, $tr: 0, $br: 0, $bl: 0)
+
+        border-radius: $tl $tr $br $bl

@@ -1,33 +1,33 @@
 const gulp          = require('gulp');
 const sass          = require('gulp-sass')(require('sass'));
 const sourceMap     = require('gulp-sourcemaps');
+const imagemin      = require('gulp-imagemin');
 const del           = require('del');
 
 //
 
-const devDir    = './_dev/';
-const srcDir    = './src/assets/';
-const pubDir    = './public/assets/';
-const buildDir  = './build/**/*';
+const srcDir = './src/';
+const pubDir = './public/';
 
-const dev = {
+const d = {
 
-    js:     devDir +'js/**/*.js',
-    sass:   devDir +'sass/**/*.sass',
-    font:   devDir +'font/**/*'
+    dev: {
 
-}
-const src = {
+        sass:   srcDir + 'sass/**/*.sass'
 
-    js:     srcDir +'js',
-    css:    srcDir +'css',
-    font:   srcDir +'font'
+    },
 
-}
-const pub = {
+    src: {
 
-    css: pubDir +'css',
-    font: pubDir +'font'
+        css:    srcDir + 'css'
+
+    },
+
+    pub: {
+
+        css:    pubDir + 'assets/css'
+
+    }
 
 }
 
@@ -35,35 +35,8 @@ const pub = {
 
 const prep = {
 
-    js:         () => { return del(src.js+'/**/*') },
-    devcss:     () => { return del(pub.css+'/**/*') },
-    buildcss:   () => { return del(src.css+'/**/*') },
-    font:       () => { return del(src.font+'/**/*') }
-
-}
-
-//
-
-function doFont(cb) {
-
-    // Move fonts
-
-    return gulp.src(dev.font)
-        .pipe(gulp.dest(src.font))
-        .pipe(gulp.dest(pub.font));
-
-    cb();
-
-}
-
-function doJSClient(cb) {
-
-    // Move javascript.
-
-    return gulp.src(dev.js)
-        .pipe(gulp.dest(src.js))
-
-    cb();
+    devcss:     () => { return del(d.pub.css+'/**/*') },
+    buildcss:   () => { return del(d.src.css+'/**/*') }
 
 }
 
@@ -71,11 +44,12 @@ function doCSS(cb) {
 
     // Get Sass and turn into CSS, create sourcemaps and then move to public
 
-    return gulp.src(dev.sass)
+    return gulp.src(d.dev.sass)
         .pipe(sourceMap.init())
         .pipe(sass())
         .pipe(sourceMap.write())
-        .pipe(gulp.dest(pub.css))
+        .pipe(gulp.dest(d.src.css))
+        .pipe(gulp.dest(d.pub.css))
 
     cb();
 
@@ -83,21 +57,18 @@ function doCSS(cb) {
 
 function buildCSS(cb) {
 
-    return gulp.src(dev.sass)
+    return gulp.src(d.dev.sass)
         .pipe(sass())
-        .pipe(gulp.dest(src.css))
+        .pipe(gulp.dest(d.src.css))
+        .pipe(gulp.dest(d.pub.css))
 
     cb();
 
 }
 
 function watchAll() {
-    
-    gulp.watch(dev.js, gulp.series(prep.js, doJSClient));
 
-    gulp.watch(dev.sass, gulp.series(prep.buildcss, prep.devcss, doCSS, buildCSS));
-
-    gulp.watch(dev.font, gulp.series(prep.font, doFont));
+    gulp.watch(d.dev.sass, gulp.series(prep.buildcss, prep.devcss, doCSS, buildCSS));
 
 }
 

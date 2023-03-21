@@ -1,0 +1,28 @@
+//
+
+img.crest
+
+    $s: 42px
+
+    position: relative
+
+    width: $s
+    height: $s
+
+    background-size: 60%
+    background-position: center
+    background-repeat: no-repeat
+    background-color: $light
+
+    border: 1px solid $dark
+    border-radius: $s
+
+    // Classes
+
+    &.out
+
+        opacity: .2
+
+    &.in
+
+        +transform(translateX, - calc($s / 2))
